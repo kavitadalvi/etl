@@ -1,0 +1,88 @@
+2021-06-13 00:57:49.714 etl       (main                ) INFO     ----- Program started -----
+2021-06-13 00:57:49.725 etl       (main                ) INFO     Transformation name --> sales-summary
+2021-06-13 00:57:49.726 etl       (main                ) INFO     Source file --> input/sales-records.csv
+2021-06-13 00:57:49.731 pipeline  (extract             ) INFO     Source file format --> csv
+2021-06-13 00:57:49.732 pipeline  (extract             ) INFO     5 records extracted
+2021-06-13 00:57:49.733 pipeline  (run_preprocess_tasks) INFO     Task: data_completeness_check
+2021-06-13 00:57:49.733 pipeline  (run_preprocess_tasks) INFO     Task: data_validations_check
+2021-06-13 00:57:49.733 pipeline  (run_preprocess_tasks) INFO     Task: date_field_check
+2021-06-13 00:57:49.738 pipeline  (run_preprocess_tasks) INFO     Task: float_field_check
+2021-06-13 00:57:49.739 pipeline  (run_preprocess_tasks) INFO     Task: number_field_check
+2021-06-13 00:57:49.740 pipeline  (transform           ) INFO     Output file --> output/sales-transformed.json
+2021-06-13 00:57:50.129 etl       (main                ) INFO     ----- Program complete -----
+
+
+2021-06-13 00:58:18.233 etl       (main                ) INFO     ----- Program started -----
+2021-06-13 00:58:18.241 etl       (main                ) INFO     Transformation name --> sales-aggregate
+2021-06-13 00:58:18.243 etl       (main                ) INFO     Source file --> input/sales-records.csv
+2021-06-13 00:58:18.248 pipeline  (get_preprocess_tasks) DEBUG    data_validations_check not required
+2021-06-13 00:58:49.138 etl       (main                ) INFO     ----- Program started -----
+2021-06-13 00:58:49.142 etl       (main                ) INFO     Transformation name --> sales-aggregate
+2021-06-13 00:58:49.142 etl       (main                ) INFO     Source file --> input/sales-records.csv
+2021-06-13 00:58:49.147 pipeline  (extract             ) INFO     Source file format --> csv
+2021-06-13 00:58:49.149 pipeline  (extract             ) INFO     5 records extracted
+2021-06-13 00:58:49.150 pipeline  (run_preprocess_tasks) INFO     Task: data_completeness_check
+2021-06-13 00:58:49.150 pipeline  (run_preprocess_tasks) INFO     Task: data_validations_check
+2021-06-13 00:58:49.151 pipeline  (run_preprocess_tasks) INFO     Task: date_field_check
+2021-06-13 00:58:49.154 pipeline  (run_preprocess_tasks) INFO     Task: float_field_check
+2021-06-13 00:58:49.155 pipeline  (run_preprocess_tasks) INFO     Task: number_field_check
+2021-06-13 00:58:49.156 pipeline  (transform           ) INFO     Output file --> output/sales-transformed.json
+2021-06-13 00:58:49.607 etl       (main                ) INFO     ----- Program complete -----
+
+
+2021-06-13 00:59:10.890 etl       (main                ) INFO     ----- Program started -----
+2021-06-13 00:59:10.890 etl       (main                ) INFO     Transformation name --> sales-aggregate
+2021-06-13 00:59:10.890 etl       (main                ) INFO     Source file --> input/sales-records.csv
+2021-06-13 00:59:10.895 pipeline  (extract             ) INFO     Source file format --> csv
+2021-06-13 00:59:10.895 pipeline  (extract             ) INFO     5 records extracted
+2021-06-13 00:59:10.895 pipeline  (run_preprocess_tasks) INFO     Task: data_completeness_check
+2021-06-13 00:59:10.895 pipeline  (run_preprocess_tasks) INFO     Task: data_validations_check
+2021-06-13 00:59:10.895 pipeline  (run_preprocess_tasks) INFO     Task: date_field_check
+2021-06-13 00:59:10.897 pipeline  (run_preprocess_tasks) INFO     Task: float_field_check
+2021-06-13 00:59:10.897 pipeline  (run_preprocess_tasks) INFO     Task: number_field_check
+2021-06-13 00:59:10.897 pipeline  (transform           ) INFO     Output file --> output/sales-transformed.json
+2021-06-13 00:59:11.173 etl       (main                ) INFO     ----- Program complete -----
+
+
+2021-06-13 00:59:43.809 etl       (main                ) INFO     ----- Program started -----
+2021-06-13 00:59:43.809 etl       (main                ) INFO     Transformation name --> sales-aggregate
+2021-06-13 00:59:43.809 etl       (main                ) INFO     Source file --> input/sales-records.csv
+2021-06-13 00:59:43.813 pipeline  (extract             ) INFO     Source file format --> csv
+2021-06-13 00:59:43.814 pipeline  (extract             ) INFO     5 records extracted
+2021-06-13 00:59:43.814 pipeline  (run_preprocess_tasks) INFO     Task: data_completeness_check
+2021-06-13 00:59:43.814 pipeline  (run_preprocess_tasks) INFO     Task: data_validations_check
+2021-06-13 00:59:43.814 pipeline  (run_preprocess_tasks) INFO     Task: date_field_check
+2021-06-13 00:59:43.817 pipeline  (run_preprocess_tasks) INFO     Task: float_field_check
+2021-06-13 00:59:43.817 pipeline  (run_preprocess_tasks) INFO     Task: number_field_check
+2021-06-13 00:59:43.817 pipeline  (transform           ) INFO     Output file --> output/sales-transformed.json
+2021-06-13 00:59:44.158 etl       (main                ) INFO     ----- Program complete -----
+
+
+2021-06-13 00:59:59.852 etl       (main                ) INFO     ----- Program started -----
+2021-06-13 00:59:59.852 etl       (main                ) INFO     Transformation name --> sales-aggregate
+2021-06-13 00:59:59.852 etl       (main                ) INFO     Source file --> input/sales-records.csv
+2021-06-13 00:59:59.855 pipeline  (extract             ) INFO     Source file format --> csv
+2021-06-13 00:59:59.856 pipeline  (extract             ) INFO     5 records extracted
+2021-06-13 00:59:59.856 pipeline  (run_preprocess_tasks) INFO     Task: data_completeness_check
+2021-06-13 00:59:59.856 pipeline  (run_preprocess_tasks) INFO     Task: data_validations_check
+2021-06-13 00:59:59.856 pipeline  (run_preprocess_tasks) INFO     Task: date_field_check
+2021-06-13 00:59:59.858 pipeline  (run_preprocess_tasks) INFO     Task: float_field_check
+2021-06-13 00:59:59.858 pipeline  (run_preprocess_tasks) INFO     Task: number_field_check
+2021-06-13 00:59:59.859 pipeline  (transform           ) INFO     Output file --> output/sales-aggregate.json
+2021-06-13 01:00:00.401 etl       (main                ) INFO     ----- Program complete -----
+
+
+2021-06-13 01:00:02.093 etl       (main                ) INFO     ----- Program started -----
+2021-06-13 01:00:02.093 etl       (main                ) INFO     Transformation name --> sales-summary
+2021-06-13 01:00:02.093 etl       (main                ) INFO     Source file --> input/sales-records.csv
+2021-06-13 01:00:02.096 pipeline  (extract             ) INFO     Source file format --> csv
+2021-06-13 01:00:02.097 pipeline  (extract             ) INFO     5 records extracted
+2021-06-13 01:00:02.097 pipeline  (run_preprocess_tasks) INFO     Task: data_completeness_check
+2021-06-13 01:00:02.097 pipeline  (run_preprocess_tasks) INFO     Task: data_validations_check
+2021-06-13 01:00:02.097 pipeline  (run_preprocess_tasks) INFO     Task: date_field_check
+2021-06-13 01:00:02.099 pipeline  (run_preprocess_tasks) INFO     Task: float_field_check
+2021-06-13 01:00:02.099 pipeline  (run_preprocess_tasks) INFO     Task: number_field_check
+2021-06-13 01:00:02.099 pipeline  (transform           ) INFO     Output file --> output/sales-transformed.json
+2021-06-13 01:00:02.411 etl       (main                ) INFO     ----- Program complete -----
+
+

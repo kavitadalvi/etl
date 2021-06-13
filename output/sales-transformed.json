@@ -1,0 +1,88 @@
+{
+    "Asia": {
+        "Offline": [
+            {
+                "Country": "Japan",
+                "ItemType": "Cereal",
+                "OrderDate": "4/10/2010",
+                "OrderId": "161442649",
+                "OrderPriority": "C",
+                "ShipDate": "5/12/2010",
+                "TotalCost": "389039.42",
+                "TotalProfit": "294295.98",
+                "TotalRevenue": "683335.4",
+                "UnitCost": "117.11",
+                "UnitPrice": "205.7",
+                "UnitsSold": "3322"
+            }
+        ]
+    },
+    "Middle East and North Africa": {
+        "Offline": [
+            {
+                "Country": "Libya",
+                "ItemType": "Cosmetics",
+                "OrderDate": "10/18/2014",
+                "OrderId": "686800706",
+                "OrderPriority": "M",
+                "ShipDate": "10/31/2014",
+                "TotalCost": "2224085.18",
+                "TotalProfit": "1468506.02",
+                "TotalRevenue": "3692591.2",
+                "UnitCost": "263.33",
+                "UnitPrice": "437.2",
+                "UnitsSold": "8446"
+            },
+            {
+                "Country": "Libya",
+                "ItemType": "Baby Food",
+                "OrderDate": "10/31/2016",
+                "OrderId": "246222341",
+                "OrderPriority": "C",
+                "ShipDate": "12/9/2016",
+                "TotalCost": "241840.14",
+                "TotalProfit": "145419.62",
+                "TotalRevenue": "387259.76",
+                "UnitCost": "159.42",
+                "UnitPrice": "255.28",
+                "UnitsSold": "1517"
+            }
+        ]
+    },
+    "North America": {
+        "Online": [
+            {
+                "Country": "Canada",
+                "ItemType": "Vegetables",
+                "OrderDate": "11/7/2011",
+                "OrderId": "185941302",
+                "OrderPriority": "M",
+                "ShipDate": "12/8/2011",
+                "TotalCost": "274426.74",
+                "TotalProfit": "190526.34",
+                "TotalRevenue": "464953.08",
+                "UnitCost": "90.93",
+                "UnitPrice": "154.06",
+                "UnitsSold": "3018"
+            }
+        ]
+    },
+    "Sub-Saharan Africa": {
+        "Offline": [
+            {
+                "Country": "Chad",
+                "ItemType": "Fruits",
+                "OrderDate": "8/16/2011",
+                "OrderId": "645713555",
+                "OrderPriority": "H",
+                "ShipDate": "8/31/2011",
+                "TotalCost": "68127.4",
+                "TotalProfit": "23726.45",
+                "TotalRevenue": "91853.85",
+                "UnitCost": "6.92",
+                "UnitPrice": "9.33",
+                "UnitsSold": "9845"
+            }
+        ]
+    }
+}
