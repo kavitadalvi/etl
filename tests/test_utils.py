@@ -33,5 +33,3 @@ def test_number_with_float_input_2():
 def test_number_with_integer_input():
     ret_val = utils.is_numeric("19")
     assert ret_val == True
-
-

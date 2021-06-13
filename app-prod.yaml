@@ -1,5 +1,3 @@
 logging:
   log_file: log\simple_etl.log
   log_level: INFO
-target-db:
-

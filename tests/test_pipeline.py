@@ -82,8 +82,8 @@ SOURCE_FIELDS_VALID = ['Region', 'Country', 'Item Type', 'Sales Channel', 'Order
 SOURCE_DATA_VALID = '''Region,Country,Item Type,Sales Channel,Order Priority,Order Date,Order ID,Ship Date,Units Sold,Unit Price,Unit Cost,Total Revenue,Total Cost,Total Profit
 Middle East and North Africa,Libya,Cosmetics,Offline,M,10/18/2014,686800706,10/31/2014,8446,437.2,263.33,3692591.2,2224085.18,1468506.02
 North America,Canada,Vegetables,Online,M,11/7/2011,185941302,12/8/2011,3018,154.06,90.93,464953.08,274426.74,190526.34
-Middle East and North Africa,Libya,Baby Food,Offline,C,10/31/2016,246222341,12/9/2016,1517,255.28,159.42,387259.76,241840.14,145419.62
-Asia,Japan,Cereal,Offline,C,4/10/2010,161442649,5/12/2010,3322,205.7,117.11,683335.4,389039.42,294295.98'''
+Middle East and North Africa,Libya,Baby Food,Offline,C,10/31/2016,246222341,12/9/2016,1517,255.28,159.42,387259.76,241840.14,145419.62'''
+
 EXTRACTED_SOURCE_DATA_VALID = \
 {
     1:{
@@ -158,17 +158,53 @@ def my_valid_pipeline():
     print(my_class.source_data)
     return my_class
 
-
 # source data with only headers. no actual data rows
 SOURCE_NO_DATA_1 = '''Region,Country,Item Type,Sales Channel,Order Priority,Order Date,Order ID,Ship Date,Units Sold,Unit Price,Unit Cost,Total Revenue,Total Cost,Total Profit'''
 # no data in source
 SOURCE_NO_DATA_2 = ''
 # source data contains fewer fields than expected
-SOURCE_DATA_INVALID = '''Region,Country,Item Type,Sales Channel,Order Priority,Order Date,Order ID,Ship Date,Units Sold,Unit Price,Unit Cost,Total Revenue,Total Profit
-Middle East and North Africa,Libya,Cosmetics,Offline,M,10/18/2014,686800706,10/31/2014,8446,437.2,263.33,3692591.2,1468506.02
-North America,Canada,Vegetables,Online,M,11/7/2011,185941302,12/8/2011,3018,154.06,90.93,464953.08,190526.34
-Middle East and North Africa,Libya,Baby Food,Offline,C,10/31/2016,246222341,12/9/2016,1517,255.28,159.42,387259.76,145419.62
-Asia,Japan,Cereal,Offline,C,4/10/2010,161442649,5/12/2010,3322,205.7,117.11,683335.4,294295.98'''
+SOURCE_DATA_MISSING_FIELD = '''Region,Country,Item Type,Sales Channel,Order Priority,Order Date,Order ID,Ship Date,Units Sold,Unit Price,Unit Cost,Total Revenue,Total Cost,Total Profit
+Middle East and North Africa,Libya,Cosmetics,Offline,M,10/18/2014,686800706,10/31/2014,8446,437.2,263.33,3692591.2,2224085.18,1468506.02
+North America,Canada,Vegetables,Online,M,11/7/2011,185941302,12/8/2011,3018,154.06,90.93,464953.08,274426.74,190526.34
+Middle East and North Africa,Libya,Baby Food,C,10/31/2016,246222341,12/9/2016,1517,255.28,159.42,387259.76,241840.14,145419.62'''
+
+SOURCE_DATA_MISSING_DATA = '''Region,Country,Item Type,Sales Channel,Order Priority,Order Date,Order ID,Ship Date,Units Sold,Unit Price,Unit Cost,Total Revenue,Total Cost,Total Profit
+Middle East and North Africa,Libya,,Offline,M,10/18/2014,686800706,10/31/2014,8446,437.2,263.33,3692591.2,2224085.18,1468506.02
+North America,Canada,Vegetables,Online,M,11/7/2011,185941302,12/8/2011,3018,154.06,90.93,464953.08,274426.74,190526.34
+Middle East and North Africa,Libya,Baby Food,Offline,C,10/31/2016,246222341,12/9/2016,1517,255.28,159.42,387259.76,241840.14,145419.62'''
+
+SOURCE_DATA_INVALID_REGION = '''Region,Country,Item Type,Sales Channel,Order Priority,Order Date,Order ID,Ship Date,Units Sold,Unit Price,Unit Cost,Total Revenue,Total Cost,Total Profit
+Middle East and North Africa,Libya,Cosmetics,Offline,M,10/18/2014,686800706,10/31/2014,8446,437.2,263.33,3692591.2,2224085.18,1468506.02
+North America,Canada,Vegetables,Online,M,11/7/2011,185941302,12/8/2011,3018,154.06,90.93,464953.08,274426.74,190526.34
+MiddleEast and North Africa,Libya,Baby Food,Offline,C,10/31/2016,246222341,12/9/2016,1517,255.28,159.42,387259.76,241840.14,145419.62'''
+
+SOURCE_DATA_INVALID_SALES_CHANNEL = '''Region,Country,Item Type,Sales Channel,Order Priority,Order Date,Order ID,Ship Date,Units Sold,Unit Price,Unit Cost,Total Revenue,Total Cost,Total Profit
+Middle East and North Africa,Libya,Cosmetics,On line,M,10/18/2014,686800706,10/31/2014,8446,437.2,263.33,3692591.2,2224085.18,1468506.02
+North America,Canada,Vegetables,Online,M,11/7/2011,185941302,12/8/2011,3018,154.06,90.93,464953.08,274426.74,190526.34
+Middle East and North Africa,Libya,Baby Food,Offline,C,10/31/2016,246222341,12/9/2016,1517,255.28,159.42,387259.76,241840.14,145419.62'''
+
+SOURCE_DATA_INVALID_PRIORITY = '''Region,Country,Item Type,Sales Channel,Order Priority,Order Date,Order ID,Ship Date,Units Sold,Unit Price,Unit Cost,Total Revenue,Total Cost,Total Profit
+Middle East and North Africa,Libya,Cosmetics,Offline,M,10/18/2014,686800706,10/31/2014,8446,437.2,263.33,3692591.2,2224085.18,1468506.02
+North America,Canada,Vegetables,Online,A,11/7/2011,185941302,12/8/2011,3018,154.06,90.93,464953.08,274426.74,190526.34
+Middle East and North Africa,Libya,Baby Food,Offline,B,10/31/2016,246222341,12/9/2016,1517,255.28,159.42,387259.76,241840.14,145419.62'''
+
+SOURCE_DATA_INVALID_ORDER_DATE= '''Region,Country,Item Type,Sales Channel,Order Priority,Order Date,Order ID,Ship Date,Units Sold,Unit Price,Unit Cost,Total Revenue,Total Cost,Total Profit
+Middle East and North Africa,Libya,Cosmetics,Offline,M,18/10/2014,686800706,10/31/2014,8446,437.2,263.33,3692591.2,2224085.18,1468506.02
+North America,Canada,Vegetables,Online,M,11/7/2011,185941302,12/8/2011,3018,154.06,90.93,464953.08,274426.74,190526.34
+Middle East and North Africa,Libya,Baby Food,Offline,C,10/31/2016,246222341,12/9/2016,1517,255.28,159.42,387259.76,241840.14,145419.62'''
+
+SOURCE_DATA_INVALID_SHIP_DATE = '''Region,Country,Item Type,Sales Channel,Order Priority,Order Date,Order ID,Ship Date,Units Sold,Unit Price,Unit Cost,Total Revenue,Total Cost,Total Profit
+Middle East and North Africa,Libya,Cosmetics,Offline,M,10/18/2014,686800706,31/10/2014,8446,437.2,263.33,3692591.2,2224085.18,1468506.02
+North America,Canada,Vegetables,Online,M,11/7/2011,185941302,12/8/2011,3018,154.06,90.93,464953.08,274426.74,190526.34
+Middle East and North Africa,Libya,Baby Food,Offline,C,10/31/2016,246222341,19/2/2016,1517,255.28,159.42,387259.76,241840.14,145419.62'''
+
+
+@mock.patch('builtins.open', new_callable=mock_open, create=True, read_data=TRANSFORM_CONFIG_VALID_DATA)
+def setup_valid_pipeline(mock_open):
+    p = pipeline.Pipeline(TRANSFORM_NAME, SOURCE_FILENAME)
+    p.get_config()
+    p.get_preprocess_tasks(p.config)
+    return p
 
 # Done
 def test_pipeline_initialisation():
@@ -210,42 +246,108 @@ def test_get_config_with_valid_transform_passed(mock_open):
 @mock.patch('builtins.open', new_callable=mock_open, create=True, read_data=TRANSFORM_CONFIG_VALID_DATA)
 def test_extract_initialisation(mock_open):
     p = pipeline.Pipeline(TRANSFORM_NAME, SOURCE_FILENAME)
-    with mock.patch.object(pipeline.Pipeline, 'get_config', return_value=yaml.safe_load(TRANSFORM_CONFIG_VALID_DATA)):
-        e = pipeline.Extract(p)
-    assert len(e.source_fields) > 1
+    p.get_config()
+    e = pipeline.Extract(p)
+    assert len(e.__dict__.keys()) == 8
+    #with mock.patch.object(pipeline.Pipeline, 'get_config', return_value=yaml.safe_load(TRANSFORM_CONFIG_VALID_DATA)):
+    #    e = pipeline.Extract(p)
+    #assert len(e.source_fields) > 1
 
 @mock.patch('builtins.open', new_callable=mock_open, create=True, read_data=TRANSFORM_CONFIG_VALID_DATA)
 def test_transform_initialisation(mock_open):
     p = pipeline.Pipeline(TRANSFORM_NAME, SOURCE_FILENAME)
-    with mock.patch.object(pipeline.Extract, 'get_config', return_value=yaml.safe_load(TRANSFORM_CONFIG_VALID_DATA)):
-        e = pipeline.Extract(p)
-        e.extract()
-    t = pipeline.Transform(p, e)
-    assert t.source_fields == e.source_fields
-    for row in t.source_data.keys():
-        assert 'count_cols' in t.source_data[row].keys()
-        assert 'is_valid' in t.source_data[row].keys()
-        assert 'err_msg' in t.source_data[row].keys()
-        assert t.source_data[row]['count_cols'] == len(e.source_data[row])
-        assert t.source_data[row]['is_valid'] is True
-        assert t.source_data[row]['err_msg'] == []
-    assert t.date_fields == []
-    assert t.float_fields == []
-    assert t.numeric_fields == []
-    assert t.preprocessed_data == {}
-    assert t.output_file == ''
-    assert t.lookup_to_expand_fields == {}
-    assert t.transformed_data == {}
-    assert t.rejected_data == {}
+    p.get_config()
+    p.get_preprocess_tasks(p.config)
+    e = pipeline.Extract(p)
+    t = pipeline.Transform(p,e)
+    assert len(t.__dict__.keys()) == 12
 
 @mock.patch('builtins.open', new_callable=mock_open, create=True, read_data=SOURCE_DATA_VALID)
-def test_validate_data(mock_open):
-    p = pipeline.Pipeline(TRANSFORM_NAME, SOURCE_FILENAME)
-    with mock.patch.object(pipeline.Extract, 'get_config', return_value=yaml.safe_load(TRANSFORM_CONFIG_VALID_DATA)):
-        e = pipeline.Extract(p)
-        e.extract()
-    t = pipeline.Transform(p, e)
-    print(t.source_data[1])
-    print(e.config['data_validations']['Region'])
-    t.validate_data('Region', e.config['data_validations']['Region'])
-    assert t.source_data[1]['is_valid'] == False
+def test_run_data_completeness_check_with_valid_data(mock_open):
+    p = setup_valid_pipeline()
+    e = pipeline.Extract(p)
+    e.extract()
+    t = pipeline.Transform(p,e)
+    t.run_preprocess_tasks()
+    t.transform()
+    assert len(t.transformed_data) == 3
+    assert len(t.rejected_data) == 0
+
+@mock.patch('builtins.open', new_callable=mock_open, create=True, read_data=SOURCE_DATA_MISSING_FIELD)
+def test_run_data_completeness_check_with_missing_field(mock_open):
+    p = setup_valid_pipeline()
+    e = pipeline.Extract(p)
+    e.extract()
+    t = pipeline.Transform(p,e)
+    t.run_preprocess_tasks()
+    t.transform()
+    assert len(t.transformed_data) == 2
+    assert len(t.rejected_data) == 1
+
+@mock.patch('builtins.open', new_callable=mock_open, create=True, read_data=SOURCE_DATA_MISSING_DATA)
+def test_run_data_completeness_check_with_missing_data(mock_open):
+    p = setup_valid_pipeline()
+    e = pipeline.Extract(p)
+    e.extract()
+    t = pipeline.Transform(p,e)
+    t.run_preprocess_tasks()
+    t.transform()
+    assert len(t.transformed_data) == 2
+    assert len(t.rejected_data) == 1
+
+@mock.patch('builtins.open', new_callable=mock_open, create=True, read_data=SOURCE_DATA_INVALID_REGION)
+def test_run_data_completeness_check_with_invalid_region(mock_open):
+    p = setup_valid_pipeline()
+    e = pipeline.Extract(p)
+    e.extract()
+    t = pipeline.Transform(p,e)
+    t.run_preprocess_tasks()
+    t.transform()
+    assert len(t.transformed_data) == 2
+    assert len(t.rejected_data) == 1
+
+@mock.patch('builtins.open', new_callable=mock_open, create=True, read_data=SOURCE_DATA_INVALID_SALES_CHANNEL)
+def test_run_data_completeness_check_with_invalid_sales_channel(mock_open):
+    p = setup_valid_pipeline()
+    e = pipeline.Extract(p)
+    e.extract()
+    t = pipeline.Transform(p,e)
+    t.run_preprocess_tasks()
+    t.transform()
+    assert len(t.transformed_data) == 2
+    assert len(t.rejected_data) == 1
+
+@mock.patch('builtins.open', new_callable=mock_open, create=True, read_data=SOURCE_DATA_INVALID_PRIORITY)
+def test_run_data_completeness_check_with_invalid_priority(mock_open):
+    p = setup_valid_pipeline()
+    e = pipeline.Extract(p)
+    e.extract()
+    t = pipeline.Transform(p,e)
+    t.run_preprocess_tasks()
+    t.transform()
+    assert len(t.transformed_data) == 1
+    assert len(t.rejected_data) == 2
+
+
+@mock.patch('builtins.open', new_callable=mock_open, create=True, read_data=SOURCE_DATA_INVALID_ORDER_DATE)
+def test_run_data_completeness_check_with_invalid_order_date(mock_open):
+    p = setup_valid_pipeline()
+    e = pipeline.Extract(p)
+    e.extract()
+    t = pipeline.Transform(p,e)
+    t.run_preprocess_tasks()
+    t.transform()
+    assert len(t.transformed_data) == 2
+    assert len(t.rejected_data) == 1
+
+
+@mock.patch('builtins.open', new_callable=mock_open, create=True, read_data=SOURCE_DATA_INVALID_SHIP_DATE)
+def test_run_data_completeness_check_with_invalid_ship_date(mock_open):
+    p = setup_valid_pipeline()
+    e = pipeline.Extract(p)
+    e.extract()
+    t = pipeline.Transform(p,e)
+    t.run_preprocess_tasks()
+    t.transform()
+    assert len(t.transformed_data) == 1
+    assert len(t.rejected_data) == 2

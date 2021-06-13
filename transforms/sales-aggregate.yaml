@@ -1,0 +1,15 @@
+source_fields: [Region,Country,Item Type,Sales Channel,Order Priority,Order Date,Order ID,Ship Date,Units Sold,Unit Price,Unit Cost,Total Revenue,Total Cost,Total Profit]
+data_validations_check:
+  Region: [Asia,Australia and Oceania,Central America and the Caribbean,Europe,Middle East and North Africa,North America,Sub-Saharan Africa]
+  Sales Channel: [Online,Offline]
+  Order Priority: [H,M,L,C]
+date_field_check: [Order Date,Ship Date]
+float_field_check: [Unit Price,Unit Cost,Total Revenue,Total Cost,Total Profit]
+number_field_check: [Units Sold]
+output_file: output/sales-aggregate.json
+expand_output:
+  Order Priority:
+    H: High
+    M: Medium
+    L: Low
+    C: Critical

@@ -32,8 +32,6 @@ def main(transform_name, source_file):
     extract.extract()
     transform = Transform(pipeline,extract)
     transform.run_preprocess_tasks()
-    #logging.info(transform.transformed_data)
-    #logging.info(yaml.dump(transform.transformed_data))
     transform.transform()
     if transform_name == "sales-summary":
         data = transform.gen_sales_summary()
