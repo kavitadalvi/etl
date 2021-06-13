@@ -69,8 +69,8 @@ class Extract(Pipeline):
     '''
     def __init__(self, pipeline):
         Pipeline.__init__(self, pipeline.transform_name, pipeline.source_filename)
-        self.source_file_format = pipeline.source_file_format
-        self.source_filename = pipeline.source_filename
+        #self.source_file_format = pipeline.source_file_format
+        #self.source_filename = pipeline.source_filename
         self.source_fields = pipeline.config['source_fields']
         self.source_data = {}
 
@@ -129,18 +129,29 @@ class Transform(Pipeline):
         self.output_file = ''
         self.lookup_to_expand_fields = {}
 
-    #@staticmethod
     def run_data_completeness_check(self):
         '''
         Checks all fields have values
         '''
+        # missing fields
         for row in self.source_data.keys():
             if len(self.source_fields) != len(self.source_data[row]):
                 logging.debug('Record #%s has incomplete data.', row)
                 self.transformed_data[row]['is_valid'] = False
                 self.transformed_data[row]['err_msg'].append(ERR_INCOMPLETE_DATA_ROW)
 
-    #@staticmethod
+        # missing data in fields
+        for field in self.source_fields:
+            for row in self.source_data.keys():
+                if ERR_INCOMPLETE_DATA_ROW not in self.transformed_data[row]['err_msg']:
+                    err = []
+                    if self.source_data[row][field].strip() == '':
+                        err.append("Invalid ({}):{}".format(field,self.source_data[row][field]))
+                        logging.debug(MSG_INVALID_ROW, row, field, self.source_data[row][field])
+                    if len(err) > 0:
+                        self.transformed_data[row]['is_valid'] = False
+                        self.transformed_data[row]['err_msg'].append(err)
+
     def run_data_validations_check(self):
         '''
         Checks fields have expected values
@@ -157,7 +168,6 @@ class Transform(Pipeline):
                         self.transformed_data[row]['is_valid'] = False
                         self.transformed_data[row]['err_msg'].append(err)
 
-    #@staticmethod
     def run_date_field_check(self):
         '''
         Checks date fields have valid values
@@ -174,7 +184,6 @@ class Transform(Pipeline):
                         self.transformed_data[row]['is_valid'] = False
                         self.transformed_data[row]['err_msg'].append(err)
 
-    #@staticmethod
     def run_float_field_check(self):
         '''
         Checks float fields have valid values
@@ -191,7 +200,6 @@ class Transform(Pipeline):
                         self.transformed_data[row]['is_valid'] = False
                         self.transformed_data[row]['err_msg'].append(err)
 
-    #@staticmethod
     def run_number_field_check(self):
         '''
         Checks numeric fields have valid values
