@@ -21,4 +21,4 @@ jobs:
         pip install pyyaml
     - name: Analysing the code with pylint
       run: |
-        pylint `ls -R|grep .py$|grep -v test_|xargs`
+        pylint `ls -R|grep .py$|grep -v test_|grep -v __init__|xargs`
