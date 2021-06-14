@@ -13,6 +13,7 @@ from yaml.scanner import ScannerError
 import utils
 
 ERR_INCOMPLETE_DATA_ROW = "Some fields missing data"
+INVALID_MSG="Invalid ({}):{}"
 MSG_INVALID_ROW = 'Row %s --> Invalid %s : %s'
 PREPROCESS_TASKS = [
     'data_validations_check',
@@ -147,7 +148,7 @@ class Transform(Pipeline):
                 if ERR_INCOMPLETE_DATA_ROW not in self.transformed_data[row]['err_msg']:
                     err = []
                     if self.source_data[row][field].strip() == '':
-                        err.append("Invalid ({}):{}".format(field,self.source_data[row][field]))
+                        err.append(INVALID_MSG.format(field,self.source_data[row][field]))
                         logging.debug(MSG_INVALID_ROW, row, field, self.source_data[row][field])
                     if len(err) > 0:
                         self.transformed_data[row]['is_valid'] = False
@@ -170,7 +171,7 @@ class Transform(Pipeline):
                 if ERR_INCOMPLETE_DATA_ROW not in self.transformed_data[row]['err_msg']:
                     err = []
                     if not self.source_data[row][field] in valid_values:
-                        err.append("Invalid ({}):{}".format(field,self.source_data[row][field]))
+                        err.append(INVALID_MSG.format(field,self.source_data[row][field]))
                         logging.debug(MSG_INVALID_ROW, row, field, self.source_data[row][field])
                     if len(err) > 0:
                         self.transformed_data[row]['is_valid'] = False
@@ -186,7 +187,7 @@ class Transform(Pipeline):
                 if ERR_INCOMPLETE_DATA_ROW not in self.transformed_data[row]['err_msg']:
                     err = []
                     if not utils.is_valid_date(self.source_data[row][field],date_format='%m/%d/%Y'):
-                        err.append("Invalid ({}):{}".format(field,self.source_data[row][field]))
+                        err.append(INVALID_MSG.format(field,self.source_data[row][field]))
                         logging.debug(MSG_INVALID_ROW, row, field, self.source_data[row][field])
                     if len(err) > 0:
                         self.transformed_data[row]['is_valid'] = False
@@ -202,7 +203,7 @@ class Transform(Pipeline):
                 if ERR_INCOMPLETE_DATA_ROW not in self.transformed_data[row]['err_msg']:
                     err = []
                     if not utils.is_numeric(self.source_data[row][field]):
-                        err.append("Invalid ({}):{}".format(field,self.source_data[row][field]))
+                        err.append(INVALID_MSG.format(field,self.source_data[row][field]))
                         logging.debug(MSG_INVALID_ROW, row, field, self.source_data[row][field])
                     if len(err) > 0:
                         self.transformed_data[row]['is_valid'] = False
@@ -218,7 +219,7 @@ class Transform(Pipeline):
                 if ERR_INCOMPLETE_DATA_ROW not in self.transformed_data[row]['err_msg']:
                     err = []
                     if not self.source_data[row][field].isdigit():
-                        err.append("Invalid ({}):{}".format(field,self.source_data[row][field]))
+                        err.append(INVALID_MSG.format(field,self.source_data[row][field]))
                         logging.debug(MSG_INVALID_ROW, row, field, self.source_data[row][field])
                     if len(err) > 0:
                         self.transformed_data[row]['is_valid'] = False

@@ -254,9 +254,6 @@ def test_extract_initialisation(mock_open):
     p.get_config()
     e = pipeline.Extract(p)
     assert len(e.__dict__.keys()) == 8
-    #with mock.patch.object(pipeline.Pipeline, 'get_config', return_value=yaml.safe_load(TRANSFORM_CONFIG_VALID_DATA)):
-    #    e = pipeline.Extract(p)
-    #assert len(e.source_fields) > 1
 
 @mock.patch('builtins.open', new_callable=mock_open, create=True, read_data=TRANSFORM_CONFIG_VALID_DATA)
 def test_transform_initialisation(mock_open):
