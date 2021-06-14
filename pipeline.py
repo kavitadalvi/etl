@@ -7,6 +7,7 @@ import json
 import logging
 import copy
 from pymongo import MongoClient
+from pymongo import errors
 import yaml
 from yaml.scanner import ScannerError
 import utils
@@ -69,8 +70,6 @@ class Extract(Pipeline):
     '''
     def __init__(self, pipeline):
         Pipeline.__init__(self, pipeline.transform_name, pipeline.source_filename)
-        #self.source_file_format = pipeline.source_file_format
-        #self.source_filename = pipeline.source_filename
         self.source_fields = pipeline.config['source_fields']
         self.source_data = {}
 
@@ -87,19 +86,17 @@ class Extract(Pipeline):
                 logging.error('Source file not found')
                 sys.exit(1)
 
-            if len(data_rows) <= 1:
-                logging.warning('No data in source. Exiting.')
-                sys.exit(1)
-            else:
+            if len(data_rows) != 0:
                 data_rows.pop(0) # Remove header row
-                # return source data as nested dictionary
-                # Main key is row number
-                # Each row value will be dict of form {field1: value1, field2: value2, ...so on}
-                rownum = 1
-                for row in data_rows:
-                    self.source_data[rownum] = dict(zip(self.source_fields,row))
-                    rownum = rownum + 1
-                logging.info('%s records extracted', len(self.source_data))
+
+            # create source data as nested dictionary
+            # Main key is row number
+            # Each row value will be dict of form {field1: value1, field2: value2, ...so on}
+            rownum = 1
+            for row in data_rows:
+                self.source_data[str(rownum)] = dict(zip(self.source_fields,row))
+                rownum = rownum + 1
+            logging.info('%s records extracted', len(self.source_data))
 
 class Transform(Pipeline):
     '''
@@ -123,23 +120,27 @@ class Transform(Pipeline):
         # initialise all initial data as valid
         # data will be individually validated in later stages of pipeline
         for row in self.transformed_data.keys():
+            self.transformed_data[row]['col_count'] = len(self.source_data[row])
             self.transformed_data[row]['is_valid'] = True
             self.transformed_data[row]['err_msg'] = []
         self.rejected_data = {}
-        self.output_file = ''
+        self.output_file = pipeline.config['output_file']
         self.lookup_to_expand_fields = {}
 
-    def run_data_completeness_check(self):
+    def check_missing_fields(self):
         '''
-        Checks all fields have values
+        Check data row is complete
         '''
-        # missing fields
         for row in self.source_data.keys():
             if len(self.source_fields) != len(self.source_data[row]):
                 logging.debug('Record #%s has incomplete data.', row)
                 self.transformed_data[row]['is_valid'] = False
                 self.transformed_data[row]['err_msg'].append(ERR_INCOMPLETE_DATA_ROW)
 
+    def check_missing_data(self):
+        '''
+        Check no data row is empty
+        '''
         # missing data in fields
         for field in self.source_fields:
             for row in self.source_data.keys():
@@ -151,6 +152,13 @@ class Transform(Pipeline):
                     if len(err) > 0:
                         self.transformed_data[row]['is_valid'] = False
                         self.transformed_data[row]['err_msg'].append(err)
+
+    def run_data_completeness_check(self):
+        '''
+        Checks all fields have values
+        '''
+        self.check_missing_fields()
+        self.check_missing_data()
 
     def run_data_validations_check(self):
         '''
@@ -228,6 +236,53 @@ class Transform(Pipeline):
                 logging.warning('Task \'%s\' undefined', task)
                 continue
 
+    def get_db_connection(self):
+        '''
+        Get db connection to write transformation output to
+        '''
+        db_host=''
+        db_port=''
+        # get db connection
+        try:
+            db_host = self.config['target_db']['host']
+            db_port = self.config['target_db']['port']
+        except KeyError:
+            err_text = 'DB host/port not specified.'
+            logging.error(err_text)
+            print(err_text + ' Please check logs.')
+            sys.exit(1)
+
+        try:
+            connect = MongoClient(db_host, db_port)
+        except errors.ServerSelectionTimeoutError:
+            logging.error('Could not connect to MongoDB')
+            sys.exit(1)
+        else:
+            return connect
+
+    def write_rejected_row_to_db(self):
+        '''
+        Write data from dictionary into database
+        '''
+        data = copy.deepcopy(self.rejected_data)
+        # write to db
+        db_con = self.get_db_connection()
+        db_name = db_con[self.config['target_db']['name']]
+        coll_name = db_name['sales_rejected']
+        if coll_name.count() > 0:
+            coll_name.drop()
+        coll_name.insert_one(data)
+        del data
+
+    def transform_data_expansion(self):
+        '''
+        Replace data with expanded data if setup
+        '''
+        for field, field_exp in self.config['expand_output'].items():
+            for row, data in self.transformed_data.items():
+                if self.transformed_data[row][field] in field_exp.keys():
+                    self.transformed_data[row][field] = field_exp[data[field]]
+
     def transform(self):
         '''
         Transform source data
@@ -237,43 +292,26 @@ class Transform(Pipeline):
             Float field validations
             Digit field validations
         '''
+        self.run_preprocess_tasks()
+
         for row in [k for (k,v) in self.transformed_data.items() if v['is_valid'] is False]:
             self.rejected_data[row] = self.source_data[row]
+            self.rejected_data[row]['col_count'] = self.transformed_data[row]['col_count']
+            self.rejected_data[row]['err_msg'] = self.transformed_data[row]['err_msg']
             logging.warning("Row %s rejected: %s", row, self.source_data[row])
             del self.transformed_data[row]
             logging.debug('Removed row %s', row)
+
         if len(self.rejected_data) > 0:
             logging.warning( "%s row(s) rejected", len(self.rejected_data))
 
+        self.write_rejected_row_to_db()
+
+        if 'expand_output' in self.config.keys():
+            self.transform_data_expansion()
+
         self.output_file = self.config['output_file']
         logging.info("Output file --> %s", self.output_file)
-
-        #if (len(self.transformed_data)) == 0:
-        #    # exit if no data is transformed
-        #    logging.warning("0 rows transformed. Exiting pipeline.")
-        #    sys.exit(1)
-        #else:
-        #    logging.info( "%s row(s) transformed", len(self.transformed_data))
-
-    def calc_revenue(self, sales_dict, region, country):
-        '''
-        Calculate total revenue per region-country in transformed data
-        '''
-        revenue = 0
-        for value in sales_dict.values():
-            if value['Region']==region and value['Country']==country:
-                revenue = revenue + float(value['Total Revenue'])
-        return revenue
-
-    def calc_profit(self, sales_dict, region, country):
-        '''
-        Calculate total profit per region-country in transformed data
-        '''
-        profit = 0
-        for value in sales_dict.values():
-            if value['Region']==region and value['Country']==country:
-                profit = profit + float(value['Total Profit'])
-        return profit
 
     def gen_sales_aggregate(self):
         '''
@@ -282,13 +320,14 @@ class Transform(Pipeline):
         result = {}
         regions = set(v['Region'] for k,v in self.transformed_data.items())
         for region in regions:
-            countries = set(
-                [v['Country'] for k,v in self.transformed_data.items() if v['Region']==region]
-                )
+            countries = [
+                v['Country'] for k,v in self.transformed_data.items() if v['Region']==region
+                ]
+            countries = set(countries)
             region_list = []
             for country in countries:
-                profit = self.calc_profit(self.transformed_data,region,country)
-                revenue = self.calc_revenue(self.transformed_data,region,country)
+                profit = calc_profit(self.transformed_data,region,country)
+                revenue = calc_revenue(self.transformed_data,region,country)
                 region_list.append({
                     "Country": country
                     ,"CountryRevenue": revenue
@@ -304,9 +343,10 @@ class Transform(Pipeline):
         result = {}
         regions = set(v['Region'] for k,v in self.transformed_data.items())
         for region in regions:
-            sales_channels = set(
-                [v['Sales Channel'] for k,v in self.transformed_data.items() if v['Region']==region]
-                )
+            sales_channels = [
+                v['Sales Channel'] for k,v in self.transformed_data.items() if v['Region']==region
+                ]
+            sales_channels = set(sales_channels)
             sales_channel_dict = {}
             for sales_channel in sales_channels:
                 summary_list = []
@@ -329,25 +369,41 @@ class Transform(Pipeline):
             result[region] = sales_channel_dict
         return result
 
-    def write_json(self, data, file):
+    def write_json(self, data):
         '''
         Write data from dictionary to json file
         '''
-        with open( file, 'w' ) as json_file:
+        with open( self.output_file, 'w' ) as json_file:
             json_file.write( json.dumps( data, indent=4, sort_keys=True ) )
 
     def write_to_db(self, data):
         '''
         Write data from dictionary into database
         '''
-        # establing connection
-        try:
-            connect = MongoClient()
-            print("Connected successfully!!!")
-        except Exception as excp:
-            print("Could not connect to MongoDB: {}", format(excp))
+        # write to db
+        db_con = self.get_db_connection()
+        db_name = db_con[self.config['target_db']['name']]
+        coll_name = db_name[self.config['target_db']['collection']]
+        if coll_name.count() > 0:
+            coll_name.drop()
+        coll_name.insert_one(data)
 
-        connect.drop_database('sales')
-        db_name=connect.sales
-        coll=db_name.sales_summary
-        coll.insert_one(data)
+def calc_revenue(sales_dict, region, country):
+    '''
+    Calculate total revenue per region-country in transformed data
+    '''
+    revenue = 0
+    for value in sales_dict.values():
+        if value['Region']==region and value['Country']==country:
+            revenue = revenue + float(value['Total Revenue'])
+    return revenue
+
+def calc_profit(sales_dict, region, country):
+    '''
+    Calculate total profit per region-country in transformed data
+    '''
+    profit = 0
+    for value in sales_dict.values():
+        if value['Region']==region and value['Country']==country:
+            profit = profit + float(value['Total Profit'])
+    return profit

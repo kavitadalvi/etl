@@ -13,3 +13,8 @@ expand_output:
     M: Medium
     L: Low
     C: Critical
+target_db:
+  host: localhost
+  port: 27017
+  name: sales
+  collection: sales_aggregate
