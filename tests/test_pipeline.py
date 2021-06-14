@@ -45,6 +45,11 @@ expand_output:
     M: Medium
     L: Low
     C: Critical
+target_db:
+  host: localhost
+  port: 27017
+  name: sales
+  collection: sales_summary
 '''
 TRANSFORM_CONFIG_SOURCE_FIELDS_NOT_SPECIFIED = '''
 data_validations_check:
@@ -268,7 +273,7 @@ def test_run_data_completeness_check_with_valid_data(mock_open):
     e = pipeline.Extract(p)
     e.extract()
     t = pipeline.Transform(p,e)
-    t.run_preprocess_tasks()
+    #t.run_preprocess_tasks()
     t.transform()
     assert len(t.transformed_data) == 3
     assert len(t.rejected_data) == 0
@@ -279,7 +284,7 @@ def test_run_data_completeness_check_with_missing_field(mock_open):
     e = pipeline.Extract(p)
     e.extract()
     t = pipeline.Transform(p,e)
-    t.run_preprocess_tasks()
+    #t.run_preprocess_tasks()
     t.transform()
     assert len(t.transformed_data) == 2
     assert len(t.rejected_data) == 1
@@ -290,7 +295,7 @@ def test_run_data_completeness_check_with_missing_data(mock_open):
     e = pipeline.Extract(p)
     e.extract()
     t = pipeline.Transform(p,e)
-    t.run_preprocess_tasks()
+    #t.run_preprocess_tasks()
     t.transform()
     assert len(t.transformed_data) == 2
     assert len(t.rejected_data) == 1
@@ -301,7 +306,7 @@ def test_run_data_completeness_check_with_invalid_region(mock_open):
     e = pipeline.Extract(p)
     e.extract()
     t = pipeline.Transform(p,e)
-    t.run_preprocess_tasks()
+    #t.run_preprocess_tasks()
     t.transform()
     assert len(t.transformed_data) == 2
     assert len(t.rejected_data) == 1
@@ -312,7 +317,7 @@ def test_run_data_completeness_check_with_invalid_sales_channel(mock_open):
     e = pipeline.Extract(p)
     e.extract()
     t = pipeline.Transform(p,e)
-    t.run_preprocess_tasks()
+    #t.run_preprocess_tasks()
     t.transform()
     assert len(t.transformed_data) == 2
     assert len(t.rejected_data) == 1
@@ -323,7 +328,7 @@ def test_run_data_completeness_check_with_invalid_priority(mock_open):
     e = pipeline.Extract(p)
     e.extract()
     t = pipeline.Transform(p,e)
-    t.run_preprocess_tasks()
+    #t.run_preprocess_tasks()
     t.transform()
     assert len(t.transformed_data) == 1
     assert len(t.rejected_data) == 2
@@ -335,7 +340,7 @@ def test_run_data_completeness_check_with_invalid_order_date(mock_open):
     e = pipeline.Extract(p)
     e.extract()
     t = pipeline.Transform(p,e)
-    t.run_preprocess_tasks()
+    #t.run_preprocess_tasks()
     t.transform()
     assert len(t.transformed_data) == 2
     assert len(t.rejected_data) == 1
@@ -347,7 +352,7 @@ def test_run_data_completeness_check_with_invalid_ship_date(mock_open):
     e = pipeline.Extract(p)
     e.extract()
     t = pipeline.Transform(p,e)
-    t.run_preprocess_tasks()
+    #t.run_preprocess_tasks()
     t.transform()
     assert len(t.transformed_data) == 1
     assert len(t.rejected_data) == 2
