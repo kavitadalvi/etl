@@ -10,6 +10,22 @@ _Python 3.8 or higher_
     
     a.  Download code locally, say in folder APP_DIR and extract all files.
     
+        Directory structure should look like this
+    
+        <APP_DIR>
+        └input
+            ├sales-records.csv
+        └log
+        └output
+        └transforms
+            ├sales-aggregate.yaml
+            ├sales-summary.yaml
+        ├app-test.yaml
+        ├app-prod.yaml
+        ├etl.py
+        ├pipeline.py
+        ├utils.py
+    
     b.  Create link APP_DIR/app.yaml pointing to APP_DIR/app-\<env\>.yaml depending on environment to run applicaiton on.
 
 2. Install requirements
