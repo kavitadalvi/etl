@@ -10,7 +10,7 @@ _Python 3.8 or higher_
     
     a.  Download code locally, say in folder APP_DIR and extract all files.
     
-    b.  Create link APP_DIR/app.yaml pointing to APP_DIR/app-<env>.yaml depending on environment to run applicaiton on.
+    b.  Create link APP_DIR/app.yaml pointing to APP_DIR/app-\<env\>.yaml depending on environment to run applicaiton on.
 
 2. Install requirements
 
