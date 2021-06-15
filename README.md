@@ -1,5 +1,5 @@
-# etl
-Simple ETL for processing of sales data (csv) and transformation into summarized and aggregated view
+# About
+Simple command line ETL utility/tool for processing of sales data (csv) and transformation into summarized and aggregated view
 
 
 # Setup
@@ -15,3 +15,12 @@ _Python 3.8 or higher_
 2. Install requirements
 
   pip install -r requirements.txt
+
+# Execution
+    python etl.py -n "sales-summary" -c "<APP_DIR_PATH>/app.yaml" -f "<APP_DIR_PATH>/input/sales-records.csv"
+    
+        -n NAME, --name NAME        Transformation name
+
+        -f SOURCE, --source SOURCE  Source data file
+
+        -c CONFIG, --config CONFIG  Application config file
