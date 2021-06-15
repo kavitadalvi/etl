@@ -30,7 +30,7 @@ _Python 3.8 or higher_
 
 2. Install requirements
 
-  pip install -r requirements.txt
+        pip install -r requirements.txt
 
 # Execution
     
