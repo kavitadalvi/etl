@@ -17,7 +17,14 @@ _Python 3.8 or higher_
   pip install -r requirements.txt
 
 # Execution
+    
     python etl.py -n "sales-summary" -c "<APP_DIR_PATH>/app.yaml" -f "<APP_DIR_PATH>/input/sales-records.csv"
+    
+    or
+    
+    python etl.py -n "sales-aggregate" -c "<APP_DIR_PATH>/app.yaml" -f "<APP_DIR_PATH>/input/sales-records.csv"
+    
+    where,
     
         -n NAME, --name NAME        Transformation name
 
