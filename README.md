@@ -24,6 +24,7 @@ _Python 3.8 or higher_
         ├app-prod.yaml
         ├etl.py
         ├pipeline.py
+        ├requirements.txt
         ├utils.py
     
     b.  Create link APP_DIR/app.yaml pointing to APP_DIR/app-\<env\>.yaml depending on environment to run applicaiton on.
