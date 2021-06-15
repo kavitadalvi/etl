@@ -35,16 +35,20 @@ _Python 3.8 or higher_
 
 # Execution
     
-    python etl.py -n "sales-summary" -c "<APP_DIR_PATH>/app.yaml" -f "<APP_DIR_PATH>/input/sales-records.csv"
-    
-    or
-    
+    python etl.py -n "sales-summary" -c "<APP_DIR_PATH>/app.yaml" -f "<APP_DIR_PATH>/input/sales-records.csv"    
     python etl.py -n "sales-aggregate" -c "<APP_DIR_PATH>/app.yaml" -f "<APP_DIR_PATH>/input/sales-records.csv"
     
-    where,
+   where,
     
-        -n NAME, --name NAME        Transformation name
+   -n NAME, --name NAME        Transformation name
 
-        -f SOURCE, --source SOURCE  Source data file
+   -f SOURCE, --source SOURCE  Source data file
 
-        -c CONFIG, --config CONFIG  Application config file
+   -c CONFIG, --config CONFIG  Application config file
+
+   Ensure there is corresponding config file in folder **tranforms** for the transformation required.
+       
+   For transformation 'sales-summary', config file 'sales-summary.yaml' should be present.
+        
+   For transformation 'sales-aggregate', config file 'sales-aggregate.yaml' should be present.
+       
