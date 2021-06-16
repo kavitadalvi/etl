@@ -1,9 +1,19 @@
 {
     "Asia": [
         {
-            "Country": "India",
-            "CountryProfit": 2597259.76,
-            "CountryRevenue": 6767869.550000001
+            "Country": "South Korea",
+            "CountryProfit": 629216.12,
+            "CountryRevenue": 2042242.7
+        },
+        {
+            "Country": "Mongolia",
+            "CountryProfit": 2606368.89,
+            "CountryRevenue": 10143794.91
+        },
+        {
+            "Country": "Maldives",
+            "CountryProfit": 3059713.83,
+            "CountryRevenue": 7639004.44
         },
         {
             "Country": "Malaysia",
@@ -11,89 +21,24 @@
             "CountryRevenue": 16416989.18
         },
         {
-            "Country": "Mongolia",
-            "CountryProfit": 2606368.89,
-            "CountryRevenue": 10143794.910000002
-        },
-        {
-            "Country": "Turkmenistan",
-            "CountryProfit": 1430879.38,
-            "CountryRevenue": 3715458.7199999997
-        },
-        {
-            "Country": "Tajikistan",
-            "CountryProfit": 1216722.53,
-            "CountryRevenue": 4340537.42
-        },
-        {
-            "Country": "Bangladesh",
-            "CountryProfit": 1683117.7200000002,
-            "CountryRevenue": 5811989.16
-        },
-        {
-            "Country": "Sri Lanka",
-            "CountryProfit": 2304540.75,
-            "CountryRevenue": 7331133.920000001
-        },
-        {
-            "Country": "Maldives",
-            "CountryProfit": 3059713.8299999996,
-            "CountryRevenue": 7639004.4399999995
-        },
-        {
-            "Country": "Taiwan",
-            "CountryProfit": 1313724.19,
-            "CountryRevenue": 4504146.65
-        },
-        {
-            "Country": "North Korea",
-            "CountryProfit": 1894667.46,
-            "CountryRevenue": 8665953.92
-        },
-        {
-            "Country": "Uzbekistan",
-            "CountryProfit": 2449016.4699999997,
-            "CountryRevenue": 11632538.02
-        },
-        {
-            "Country": "Kyrgyzstan",
-            "CountryProfit": 861090.28,
-            "CountryRevenue": 2132326.5199999996
-        },
-        {
-            "Country": "Indonesia",
-            "CountryProfit": 654003.09,
-            "CountryRevenue": 1972317.35
-        },
-        {
-            "Country": "Kazakhstan",
-            "CountryProfit": 254529.12,
-            "CountryRevenue": 715717.14
-        },
-        {
-            "Country": "Philippines",
-            "CountryProfit": 932948.45,
-            "CountryRevenue": 2511823.08
-        },
-        {
-            "Country": "South Korea",
-            "CountryProfit": 629216.12,
-            "CountryRevenue": 2042242.6999999997
-        },
-        {
             "Country": "Thailand",
             "CountryProfit": 1347710.5,
             "CountryRevenue": 3619609.81
         },
         {
-            "Country": "China",
-            "CountryProfit": 2971471.99,
-            "CountryRevenue": 10272536.76
+            "Country": "Myanmar",
+            "CountryProfit": 1425860.68,
+            "CountryRevenue": 3596431.85
         },
         {
-            "Country": "Brunei",
-            "CountryProfit": 1099876.5999999999,
-            "CountryRevenue": 2702495.8899999997
+            "Country": "Bangladesh",
+            "CountryProfit": 1683117.72,
+            "CountryRevenue": 5811989.16
+        },
+        {
+            "Country": "Bhutan",
+            "CountryProfit": 2788442.15,
+            "CountryRevenue": 12986378.17
         },
         {
             "Country": "Japan",
@@ -101,9 +46,54 @@
             "CountryRevenue": 11883719.65
         },
         {
-            "Country": "Bhutan",
-            "CountryProfit": 2788442.1500000004,
-            "CountryRevenue": 12986378.170000002
+            "Country": "North Korea",
+            "CountryProfit": 1894667.46,
+            "CountryRevenue": 8665953.92
+        },
+        {
+            "Country": "Vietnam",
+            "CountryProfit": 3466171.6,
+            "CountryRevenue": 11668032.25
+        },
+        {
+            "Country": "Kyrgyzstan",
+            "CountryProfit": 861090.28,
+            "CountryRevenue": 2132326.52
+        },
+        {
+            "Country": "Indonesia",
+            "CountryProfit": 654003.09,
+            "CountryRevenue": 1972317.35
+        },
+        {
+            "Country": "India",
+            "CountryProfit": 2597259.76,
+            "CountryRevenue": 6767869.55
+        },
+        {
+            "Country": "Kazakhstan",
+            "CountryProfit": 254529.12,
+            "CountryRevenue": 715717.14
+        },
+        {
+            "Country": "Taiwan",
+            "CountryProfit": 1313724.19,
+            "CountryRevenue": 4504146.65
+        },
+        {
+            "Country": "Brunei",
+            "CountryProfit": 1099876.6,
+            "CountryRevenue": 2702495.89
+        },
+        {
+            "Country": "Philippines",
+            "CountryProfit": 932948.45,
+            "CountryRevenue": 2511823.08
+        },
+        {
+            "Country": "Sri Lanka",
+            "CountryProfit": 2304540.75,
+            "CountryRevenue": 7331133.92
         },
         {
             "Country": "Laos",
@@ -111,46 +101,51 @@
             "CountryRevenue": 2226896.6
         },
         {
-            "Country": "Vietnam",
-            "CountryProfit": 3466171.5999999996,
-            "CountryRevenue": 11668032.25
-        },
-        {
             "Country": "Cambodia",
-            "CountryProfit": 1872425.4300000002,
+            "CountryProfit": 1872425.43,
             "CountryRevenue": 4642313.7
         },
         {
-            "Country": "Myanmar",
-            "CountryProfit": 1425860.68,
-            "CountryRevenue": 3596431.8499999996
-        },
-        {
             "Country": "Nepal",
-            "CountryProfit": 1022269.6299999999,
+            "CountryProfit": 1022269.63,
             "CountryRevenue": 3838301.28
         },
         {
             "Country": "Singapore",
             "CountryProfit": 1590678.98,
             "CountryRevenue": 3894250.85
+        },
+        {
+            "Country": "Turkmenistan",
+            "CountryProfit": 1430879.38,
+            "CountryRevenue": 3715458.72
+        },
+        {
+            "Country": "Tajikistan",
+            "CountryProfit": 1216722.53,
+            "CountryRevenue": 4340537.42
+        },
+        {
+            "Country": "Uzbekistan",
+            "CountryProfit": 2449016.47,
+            "CountryRevenue": 11632538.02
+        },
+        {
+            "Country": "China",
+            "CountryProfit": 2971471.99,
+            "CountryRevenue": 10272536.76
         }
     ],
     "Australia and Oceania": [
         {
-            "Country": "Tonga",
-            "CountryProfit": 2346085.01,
-            "CountryRevenue": 11821702.0
+            "Country": "Papua New Guinea",
+            "CountryProfit": 6085514.28,
+            "CountryRevenue": 22209652.47
         },
         {
-            "Country": "Marshall Islands",
-            "CountryProfit": 878761.8700000001,
-            "CountryRevenue": 2525007.5
-        },
-        {
-            "Country": "New Zealand",
-            "CountryProfit": 2603861.11,
-            "CountryRevenue": 11723675.559999999
+            "Country": "Samoa ",
+            "CountryProfit": 987083.72,
+            "CountryRevenue": 2625265.85
         },
         {
             "Country": "Palau",
@@ -158,39 +153,24 @@
             "CountryRevenue": 7935532.95
         },
         {
-            "Country": "Solomon Islands",
-            "CountryProfit": 1956795.3900000001,
-            "CountryRevenue": 5148883.069999999
-        },
-        {
-            "Country": "Papua New Guinea",
-            "CountryProfit": 6085514.279999999,
-            "CountryRevenue": 22209652.47
+            "Country": "Fiji",
+            "CountryProfit": 2234745.05,
+            "CountryRevenue": 4992255.6
         },
         {
             "Country": "East Timor",
             "CountryProfit": 2426794.88,
-            "CountryRevenue": 6286071.319999999
+            "CountryRevenue": 6286071.32
         },
         {
-            "Country": "Federated States of Micronesia",
-            "CountryProfit": 147867.28,
-            "CountryRevenue": 471158.71
+            "Country": "Solomon Islands",
+            "CountryProfit": 1956795.39,
+            "CountryRevenue": 5148883.07
         },
         {
             "Country": "Vanuatu",
-            "CountryProfit": 4563264.0600000005,
+            "CountryProfit": 4563264.06,
             "CountryRevenue": 16011801.84
-        },
-        {
-            "Country": "Samoa ",
-            "CountryProfit": 987083.72,
-            "CountryRevenue": 2625265.8499999996
-        },
-        {
-            "Country": "Australia",
-            "CountryProfit": 1305135.72,
-            "CountryRevenue": 3215330.1599999997
         },
         {
             "Country": "Nauru",
@@ -198,81 +178,56 @@
             "CountryRevenue": 1225622.72
         },
         {
-            "Country": "Fiji",
-            "CountryProfit": 2234745.05,
-            "CountryRevenue": 4992255.6
+            "Country": "Tonga",
+            "CountryProfit": 2346085.01,
+            "CountryRevenue": 11821702.0
+        },
+        {
+            "Country": "Marshall Islands",
+            "CountryProfit": 878761.87,
+            "CountryRevenue": 2525007.5
+        },
+        {
+            "Country": "New Zealand",
+            "CountryProfit": 2603861.11,
+            "CountryRevenue": 11723675.56
         },
         {
             "Country": "Kiribati",
-            "CountryProfit": 1816923.8699999999,
+            "CountryProfit": 1816923.87,
             "CountryRevenue": 4744159.33
         },
         {
             "Country": "Tuvalu",
             "CountryProfit": 1861222.2,
-            "CountryRevenue": 4753453.5200000005
+            "CountryRevenue": 4753453.52
+        },
+        {
+            "Country": "Federated States of Micronesia",
+            "CountryProfit": 147867.28,
+            "CountryRevenue": 471158.71
+        },
+        {
+            "Country": "Australia",
+            "CountryProfit": 1305135.72,
+            "CountryRevenue": 3215330.16
         }
     ],
     "Central America and the Caribbean": [
         {
-            "Country": "Nicaragua",
-            "CountryProfit": 500649.79,
-            "CountryRevenue": 2159493.83
+            "Country": "Antigua and Barbuda ",
+            "CountryProfit": 1553579.58,
+            "CountryRevenue": 5650520.67
+        },
+        {
+            "Country": "El Salvador",
+            "CountryProfit": 886527.0,
+            "CountryRevenue": 1686991.53
         },
         {
             "Country": "Dominican Republic",
             "CountryProfit": 3241575.47,
-            "CountryRevenue": 10068140.139999999
-        },
-        {
-            "Country": "Antigua and Barbuda ",
-            "CountryProfit": 1553579.58,
-            "CountryRevenue": 5650520.670000001
-        },
-        {
-            "Country": "Haiti",
-            "CountryProfit": 1292393.8699999999,
-            "CountryRevenue": 3472696.83
-        },
-        {
-            "Country": "Cuba",
-            "CountryProfit": 7351820.83,
-            "CountryRevenue": 27522085.87
-        },
-        {
-            "Country": "Saint Lucia",
-            "CountryProfit": 2105226.4699999997,
-            "CountryRevenue": 6358448.6
-        },
-        {
-            "Country": "Honduras",
-            "CountryProfit": 2001807.98,
-            "CountryRevenue": 7299060.35
-        },
-        {
-            "Country": "Saint Kitts and Nevis ",
-            "CountryProfit": 1478289.3900000001,
-            "CountryRevenue": 4783484.5200000005
-        },
-        {
-            "Country": "Belize",
-            "CountryProfit": 2508863.23,
-            "CountryRevenue": 9839301.81
-        },
-        {
-            "Country": "The Bahamas",
-            "CountryProfit": 3499660.0999999996,
-            "CountryRevenue": 8824492.76
-        },
-        {
-            "Country": "Panama",
-            "CountryProfit": 4103718.6499999994,
-            "CountryRevenue": 13126867.8
-        },
-        {
-            "Country": "Dominica",
-            "CountryProfit": 349412.82999999996,
-            "CountryRevenue": 882189.76
+            "CountryRevenue": 10068140.14
         },
         {
             "Country": "Costa Rica",
@@ -280,24 +235,14 @@
             "CountryRevenue": 19628279.63
         },
         {
-            "Country": "El Salvador",
-            "CountryProfit": 886526.9999999999,
-            "CountryRevenue": 1686991.5299999998
+            "Country": "Jamaica",
+            "CountryProfit": 282944.0,
+            "CountryRevenue": 781659.17
         },
         {
-            "Country": "Grenada",
-            "CountryProfit": 637350.52,
-            "CountryRevenue": 2963196.96
-        },
-        {
-            "Country": "Trinidad and Tobago",
-            "CountryProfit": 1482904.5699999998,
-            "CountryRevenue": 6502214.67
-        },
-        {
-            "Country": "Barbados",
-            "CountryProfit": 1060665.34,
-            "CountryRevenue": 2803550.0999999996
+            "Country": "Belize",
+            "CountryProfit": 2508863.23,
+            "CountryRevenue": 9839301.81
         },
         {
             "Country": "Guatemala",
@@ -305,41 +250,81 @@
             "CountryRevenue": 8701213.81
         },
         {
-            "Country": "Saint Vincent and the Grenadines",
-            "CountryProfit": 334103.09,
-            "CountryRevenue": 943721.7000000001
+            "Country": "Saint Kitts and Nevis ",
+            "CountryProfit": 1478289.39,
+            "CountryRevenue": 4783484.52
         },
         {
-            "Country": "Jamaica",
-            "CountryProfit": 282944.0,
-            "CountryRevenue": 781659.17
+            "Country": "Trinidad and Tobago",
+            "CountryProfit": 1482904.57,
+            "CountryRevenue": 6502214.67
+        },
+        {
+            "Country": "Panama",
+            "CountryProfit": 4103718.65,
+            "CountryRevenue": 13126867.8
+        },
+        {
+            "Country": "Saint Lucia",
+            "CountryProfit": 2105226.47,
+            "CountryRevenue": 6358448.6
+        },
+        {
+            "Country": "Cuba",
+            "CountryProfit": 7351820.83,
+            "CountryRevenue": 27522085.87
+        },
+        {
+            "Country": "Nicaragua",
+            "CountryProfit": 500649.79,
+            "CountryRevenue": 2159493.83
+        },
+        {
+            "Country": "Grenada",
+            "CountryProfit": 637350.52,
+            "CountryRevenue": 2963196.96
+        },
+        {
+            "Country": "Dominica",
+            "CountryProfit": 349412.83,
+            "CountryRevenue": 882189.76
+        },
+        {
+            "Country": "Barbados",
+            "CountryProfit": 1060665.34,
+            "CountryRevenue": 2803550.1
+        },
+        {
+            "Country": "Haiti",
+            "CountryProfit": 1292393.87,
+            "CountryRevenue": 3472696.83
+        },
+        {
+            "Country": "The Bahamas",
+            "CountryProfit": 3499660.1,
+            "CountryRevenue": 8824492.76
+        },
+        {
+            "Country": "Honduras",
+            "CountryProfit": 2001807.98,
+            "CountryRevenue": 7299060.35
+        },
+        {
+            "Country": "Saint Vincent and the Grenadines",
+            "CountryProfit": 334103.09,
+            "CountryRevenue": 943721.7
         }
     ],
     "Europe": [
         {
-            "Country": "Bulgaria",
-            "CountryProfit": 2381131.84,
-            "CountryRevenue": 5430330.56
+            "Country": "Greece",
+            "CountryProfit": 1941327.25,
+            "CountryRevenue": 5965376.9
         },
         {
-            "Country": "France",
-            "CountryProfit": 368102.6,
-            "CountryRevenue": 1009016.03
-        },
-        {
-            "Country": "Poland",
-            "CountryProfit": 3328726.57,
-            "CountryRevenue": 13607288.510000002
-        },
-        {
-            "Country": "Ukraine",
-            "CountryProfit": 2437560.48,
-            "CountryRevenue": 6640695.22
-        },
-        {
-            "Country": "Moldova ",
-            "CountryProfit": 3282827.5400000005,
-            "CountryRevenue": 10971921.52
+            "Country": "Belgium",
+            "CountryProfit": 2874544.46,
+            "CountryRevenue": 9959553.53
         },
         {
             "Country": "San Marino",
@@ -347,19 +332,34 @@
             "CountryRevenue": 1412469.13
         },
         {
+            "Country": "Portugal",
+            "CountryProfit": 3793688.43,
+            "CountryRevenue": 15884378.55
+        },
+        {
+            "Country": "United Kingdom",
+            "CountryProfit": 1992893.49,
+            "CountryRevenue": 5905405.47
+        },
+        {
+            "Country": "Ireland",
+            "CountryProfit": 2963126.44,
+            "CountryRevenue": 14070575.29
+        },
+        {
             "Country": "Macedonia",
             "CountryProfit": 595624.61,
             "CountryRevenue": 2478469.5
         },
         {
-            "Country": "Bosnia and Herzegovina",
-            "CountryProfit": 1503733.9,
-            "CountryRevenue": 4359359.83
+            "Country": "Austria",
+            "CountryProfit": 3560441.46,
+            "CountryRevenue": 16199378.41
         },
         {
-            "Country": "Spain",
-            "CountryProfit": 2265165.0500000003,
-            "CountryRevenue": 8288153.290000001
+            "Country": "Lithuania",
+            "CountryProfit": 2198682.58,
+            "CountryRevenue": 7830091.32
         },
         {
             "Country": "Vatican City",
@@ -367,8 +367,38 @@
             "CountryRevenue": 1575379.28
         },
         {
+            "Country": "Latvia",
+            "CountryProfit": 258775.02,
+            "CountryRevenue": 566096.65
+        },
+        {
+            "Country": "Serbia",
+            "CountryProfit": 2281168.09,
+            "CountryRevenue": 5895768.83
+        },
+        {
+            "Country": "Georgia",
+            "CountryProfit": 2887308.06,
+            "CountryRevenue": 12197986.98
+        },
+        {
+            "Country": "Montenegro",
+            "CountryProfit": 1454715.8,
+            "CountryRevenue": 2856171.02
+        },
+        {
+            "Country": "Czech Republic",
+            "CountryProfit": 4449412.25,
+            "CountryRevenue": 15603240.11
+        },
+        {
+            "Country": "Denmark",
+            "CountryProfit": 86083.02,
+            "CountryRevenue": 260832.65
+        },
+        {
             "Country": "Albania",
-            "CountryProfit": 3143068.3399999994,
+            "CountryProfit": 3143068.34,
             "CountryRevenue": 9709899.27
         },
         {
@@ -377,114 +407,24 @@
             "CountryRevenue": 7184947.83
         },
         {
-            "Country": "Russia",
-            "CountryProfit": 1129385.71,
-            "CountryRevenue": 2965463.2199999997
-        },
-        {
-            "Country": "Estonia",
-            "CountryProfit": 1976235.35,
-            "CountryRevenue": 7873109.81
-        },
-        {
-            "Country": "Ireland",
-            "CountryProfit": 2963126.4399999995,
-            "CountryRevenue": 14070575.290000001
-        },
-        {
-            "Country": "Norway",
-            "CountryProfit": 2649519.2299999995,
-            "CountryRevenue": 6919276.23
-        },
-        {
-            "Country": "Luxembourg",
-            "CountryProfit": 3724591.5500000003,
-            "CountryRevenue": 12231206.91
-        },
-        {
-            "Country": "Italy",
-            "CountryProfit": 2455199.57,
-            "CountryRevenue": 8042108.550000001
-        },
-        {
             "Country": "Armenia",
             "CountryProfit": 1827634.7,
             "CountryRevenue": 7139689.51
         },
         {
-            "Country": "Greece",
-            "CountryProfit": 1941327.2499999998,
-            "CountryRevenue": 5965376.899999999
+            "Country": "Poland",
+            "CountryProfit": 3328726.57,
+            "CountryRevenue": 13607288.51
         },
         {
-            "Country": "Sweden",
-            "CountryProfit": 3965705.6799999997,
-            "CountryRevenue": 10324874.870000001
+            "Country": "Iceland",
+            "CountryProfit": 1145424.83,
+            "CountryRevenue": 5783631.18
         },
         {
-            "Country": "Czech Republic",
-            "CountryProfit": 4449412.25,
-            "CountryRevenue": 15603240.11
-        },
-        {
-            "Country": "Croatia",
-            "CountryProfit": 337729.62000000005,
-            "CountryRevenue": 941892.69
-        },
-        {
-            "Country": "United Kingdom",
-            "CountryProfit": 1992893.4900000002,
-            "CountryRevenue": 5905405.47
-        },
-        {
-            "Country": "Slovenia",
-            "CountryProfit": 2022225.33,
-            "CountryRevenue": 6768172.96
-        },
-        {
-            "Country": "Hungary",
-            "CountryProfit": 2711929.22,
-            "CountryRevenue": 8275573.91
-        },
-        {
-            "Country": "Malta",
-            "CountryProfit": 1483806.58,
-            "CountryRevenue": 3731064.8
-        },
-        {
-            "Country": "Belarus",
-            "CountryProfit": 3801279.29,
-            "CountryRevenue": 13482813.120000001
-        },
-        {
-            "Country": "Austria",
-            "CountryProfit": 3560441.46,
-            "CountryRevenue": 16199378.410000002
-        },
-        {
-            "Country": "Germany",
-            "CountryProfit": 3906656.29,
-            "CountryRevenue": 14150892.19
-        },
-        {
-            "Country": "Romania",
-            "CountryProfit": 4118505.5699999994,
-            "CountryRevenue": 10877716.39
-        },
-        {
-            "Country": "Belgium",
-            "CountryProfit": 2874544.46,
-            "CountryRevenue": 9959553.530000001
-        },
-        {
-            "Country": "Latvia",
-            "CountryProfit": 258775.02000000002,
-            "CountryRevenue": 566096.65
-        },
-        {
-            "Country": "Cyprus",
-            "CountryProfit": 1923118.83,
-            "CountryRevenue": 5502527.890000001
+            "Country": "Andorra",
+            "CountryProfit": 2143268.87,
+            "CountryRevenue": 7153122.97
         },
         {
             "Country": "Slovakia",
@@ -492,24 +432,9 @@
             "CountryRevenue": 4503076.26
         },
         {
-            "Country": "Monaco",
-            "CountryProfit": 1993431.83,
-            "CountryRevenue": 5541658.84
-        },
-        {
-            "Country": "Netherlands",
-            "CountryProfit": 2630556.03,
-            "CountryRevenue": 8988630.52
-        },
-        {
-            "Country": "Denmark",
-            "CountryProfit": 86083.01999999999,
-            "CountryRevenue": 260832.65
-        },
-        {
-            "Country": "Portugal",
-            "CountryProfit": 3793688.43,
-            "CountryRevenue": 15884378.55
+            "Country": "Slovenia",
+            "CountryProfit": 2022225.33,
+            "CountryRevenue": 6768172.96
         },
         {
             "Country": "Kosovo",
@@ -522,71 +447,121 @@
             "CountryRevenue": 9668457.12
         },
         {
-            "Country": "Lithuania",
-            "CountryProfit": 2198682.58,
-            "CountryRevenue": 7830091.319999999
-        },
-        {
-            "Country": "Montenegro",
-            "CountryProfit": 1454715.8,
-            "CountryRevenue": 2856171.02
-        },
-        {
-            "Country": "Andorra",
-            "CountryProfit": 2143268.87,
-            "CountryRevenue": 7153122.97
-        },
-        {
             "Country": "Switzerland",
             "CountryProfit": 2131465.71,
             "CountryRevenue": 5483183.15
         },
         {
-            "Country": "Iceland",
-            "CountryProfit": 1145424.8299999998,
-            "CountryRevenue": 5783631.180000001
+            "Country": "Bulgaria",
+            "CountryProfit": 2381131.84,
+            "CountryRevenue": 5430330.56
         },
         {
-            "Country": "Georgia",
-            "CountryProfit": 2887308.06,
-            "CountryRevenue": 12197986.980000002
+            "Country": "Belarus",
+            "CountryProfit": 3801279.29,
+            "CountryRevenue": 13482813.12
         },
         {
-            "Country": "Serbia",
-            "CountryProfit": 2281168.0900000003,
-            "CountryRevenue": 5895768.83
+            "Country": "Monaco",
+            "CountryProfit": 1993431.83,
+            "CountryRevenue": 5541658.84
+        },
+        {
+            "Country": "France",
+            "CountryProfit": 368102.6,
+            "CountryRevenue": 1009016.03
+        },
+        {
+            "Country": "Netherlands",
+            "CountryProfit": 2630556.03,
+            "CountryRevenue": 8988630.52
+        },
+        {
+            "Country": "Germany",
+            "CountryProfit": 3906656.29,
+            "CountryRevenue": 14150892.19
+        },
+        {
+            "Country": "Bosnia and Herzegovina",
+            "CountryProfit": 1503733.9,
+            "CountryRevenue": 4359359.83
+        },
+        {
+            "Country": "Ukraine",
+            "CountryProfit": 2437560.48,
+            "CountryRevenue": 6640695.22
+        },
+        {
+            "Country": "Spain",
+            "CountryProfit": 2265165.05,
+            "CountryRevenue": 8288153.29
+        },
+        {
+            "Country": "Norway",
+            "CountryProfit": 2649519.23,
+            "CountryRevenue": 6919276.23
+        },
+        {
+            "Country": "Russia",
+            "CountryProfit": 1129385.71,
+            "CountryRevenue": 2965463.22
+        },
+        {
+            "Country": "Croatia",
+            "CountryProfit": 337729.62,
+            "CountryRevenue": 941892.69
+        },
+        {
+            "Country": "Moldova ",
+            "CountryProfit": 3282827.54,
+            "CountryRevenue": 10971921.52
+        },
+        {
+            "Country": "Sweden",
+            "CountryProfit": 3965705.68,
+            "CountryRevenue": 10324874.87
+        },
+        {
+            "Country": "Malta",
+            "CountryProfit": 1483806.58,
+            "CountryRevenue": 3731064.8
+        },
+        {
+            "Country": "Italy",
+            "CountryProfit": 2455199.57,
+            "CountryRevenue": 8042108.55
+        },
+        {
+            "Country": "Luxembourg",
+            "CountryProfit": 3724591.55,
+            "CountryRevenue": 12231206.91
+        },
+        {
+            "Country": "Estonia",
+            "CountryProfit": 1976235.35,
+            "CountryRevenue": 7873109.81
+        },
+        {
+            "Country": "Cyprus",
+            "CountryProfit": 1923118.83,
+            "CountryRevenue": 5502527.89
+        },
+        {
+            "Country": "Hungary",
+            "CountryProfit": 2711929.22,
+            "CountryRevenue": 8275573.91
+        },
+        {
+            "Country": "Romania",
+            "CountryProfit": 4118505.57,
+            "CountryRevenue": 10877716.39
         }
     ],
     "Middle East and North Africa": [
         {
-            "Country": "Tunisia ",
-            "CountryProfit": 2388123.8600000003,
-            "CountryRevenue": 7835941.77
-        },
-        {
-            "Country": "Lebanon",
-            "CountryProfit": 3355698.6300000004,
-            "CountryRevenue": 13356289.44
-        },
-        {
-            "Country": "Afghanistan",
-            "CountryProfit": 1365407.1,
-            "CountryRevenue": 2843589.0700000003
-        },
-        {
             "Country": "Libya",
             "CountryProfit": 2379866.98,
             "CountryRevenue": 6100113.66
-        },
-        {
-            "Country": "Iran",
-            "CountryProfit": 4652999.32,
-            "CountryRevenue": 18719532.99
-        },
-        {
-            "Country": "Somalia",
-            "CountryProfit": 1979145.03,
-            "CountryRevenue": 4375138.01
         },
         {
             "Country": "United Arab Emirates",
@@ -594,74 +569,34 @@
             "CountryRevenue": 2591172.23
         },
         {
-            "Country": "Yemen",
-            "CountryProfit": 3677655.8299999996,
-            "CountryRevenue": 11813464.950000001
-        },
-        {
-            "Country": "Morocco",
-            "CountryProfit": 2734904.5700000003,
-            "CountryRevenue": 9937837.48
-        },
-        {
-            "Country": "Israel",
-            "CountryProfit": 667700.4,
-            "CountryRevenue": 3265587.1500000004
-        },
-        {
-            "Country": "Iraq",
-            "CountryProfit": 1240198.63,
-            "CountryRevenue": 4781813.25
-        },
-        {
-            "Country": "Algeria",
-            "CountryProfit": 2235989.24,
-            "CountryRevenue": 10272591.440000001
-        },
-        {
-            "Country": "Egypt",
-            "CountryProfit": 1629774.33,
-            "CountryRevenue": 8143736.889999999
-        },
-        {
-            "Country": "Qatar",
-            "CountryProfit": 3888936.29,
-            "CountryRevenue": 10303688.340000002
-        },
-        {
-            "Country": "Pakistan",
-            "CountryProfit": 1645731.4100000001,
-            "CountryRevenue": 4396334.96
-        },
-        {
-            "Country": "Syria",
-            "CountryProfit": 1366544.6900000002,
-            "CountryRevenue": 5345650.85
-        },
-        {
-            "Country": "Saudi Arabia",
-            "CountryProfit": 1493939.05,
-            "CountryRevenue": 4083970.71
-        },
-        {
-            "Country": "Bahrain",
-            "CountryProfit": 2144238.75,
-            "CountryRevenue": 9022805.73
-        },
-        {
-            "Country": "Azerbaijan",
-            "CountryProfit": 1249740.83,
-            "CountryRevenue": 5308405.46
-        },
-        {
             "Country": "Jordan",
             "CountryProfit": 3282798.84,
             "CountryRevenue": 11956362.24
         },
         {
-            "Country": "Oman",
-            "CountryProfit": 1753556.87,
-            "CountryRevenue": 4702742.25
+            "Country": "Israel",
+            "CountryProfit": 667700.4,
+            "CountryRevenue": 3265587.15
+        },
+        {
+            "Country": "Syria",
+            "CountryProfit": 1366544.69,
+            "CountryRevenue": 5345650.85
+        },
+        {
+            "Country": "Afghanistan",
+            "CountryProfit": 1365407.1,
+            "CountryRevenue": 2843589.07
+        },
+        {
+            "Country": "Pakistan",
+            "CountryProfit": 1645731.41,
+            "CountryRevenue": 4396334.96
+        },
+        {
+            "Country": "Yemen",
+            "CountryProfit": 3677655.83,
+            "CountryRevenue": 11813464.95
         },
         {
             "Country": "Kuwait",
@@ -669,123 +604,103 @@
             "CountryRevenue": 5724038.66
         },
         {
+            "Country": "Bahrain",
+            "CountryProfit": 2144238.75,
+            "CountryRevenue": 9022805.73
+        },
+        {
+            "Country": "Lebanon",
+            "CountryProfit": 3355698.63,
+            "CountryRevenue": 13356289.44
+        },
+        {
+            "Country": "Saudi Arabia",
+            "CountryProfit": 1493939.05,
+            "CountryRevenue": 4083970.71
+        },
+        {
+            "Country": "Algeria",
+            "CountryProfit": 2235989.24,
+            "CountryRevenue": 10272591.44
+        },
+        {
+            "Country": "Oman",
+            "CountryProfit": 1753556.87,
+            "CountryRevenue": 4702742.25
+        },
+        {
+            "Country": "Somalia",
+            "CountryProfit": 1979145.03,
+            "CountryRevenue": 4375138.01
+        },
+        {
+            "Country": "Iraq",
+            "CountryProfit": 1240198.63,
+            "CountryRevenue": 4781813.25
+        },
+        {
+            "Country": "Tunisia ",
+            "CountryProfit": 2388123.86,
+            "CountryRevenue": 7835941.77
+        },
+        {
             "Country": "Turkey",
             "CountryProfit": 3202101.61,
-            "CountryRevenue": 10225728.209999999
+            "CountryRevenue": 10225728.21
+        },
+        {
+            "Country": "Morocco",
+            "CountryProfit": 2734904.57,
+            "CountryRevenue": 9937837.48
+        },
+        {
+            "Country": "Egypt",
+            "CountryProfit": 1629774.33,
+            "CountryRevenue": 8143736.89
+        },
+        {
+            "Country": "Qatar",
+            "CountryProfit": 3888936.29,
+            "CountryRevenue": 10303688.34
+        },
+        {
+            "Country": "Iran",
+            "CountryProfit": 4652999.32,
+            "CountryRevenue": 18719532.99
+        },
+        {
+            "Country": "Azerbaijan",
+            "CountryProfit": 1249740.83,
+            "CountryRevenue": 5308405.46
         }
     ],
     "North America": [
+        {
+            "Country": "United States of America",
+            "CountryProfit": 2896828.53,
+            "CountryRevenue": 11927294.75
+        },
+        {
+            "Country": "Greenland",
+            "CountryProfit": 3386295.21,
+            "CountryRevenue": 9953334.49
+        },
         {
             "Country": "Mexico",
             "CountryProfit": 931029.76,
             "CountryRevenue": 1854866.4
         },
         {
-            "Country": "Greenland",
-            "CountryProfit": 3386295.21,
-            "CountryRevenue": 9953334.489999998
-        },
-        {
             "Country": "Canada",
-            "CountryProfit": 493905.76999999996,
-            "CountryRevenue": 1226103.2999999998
-        },
-        {
-            "Country": "United States of America",
-            "CountryProfit": 2896828.53,
-            "CountryRevenue": 11927294.75
+            "CountryProfit": 493905.77,
+            "CountryRevenue": 1226103.3
         }
     ],
     "Sub-Saharan Africa": [
         {
-            "Country": "Tanzania",
-            "CountryProfit": 1792464.48,
-            "CountryRevenue": 6794687.029999999
-        },
-        {
-            "Country": "Equatorial Guinea",
-            "CountryProfit": 2114164.0,
-            "CountryRevenue": 7753130.100000001
-        },
-        {
-            "Country": "Republic of the Congo",
-            "CountryProfit": 1005205.72,
-            "CountryRevenue": 4243168.9399999995
-        },
-        {
-            "Country": "Djibouti",
-            "CountryProfit": 2551054.32,
-            "CountryRevenue": 7896155.0600000005
-        },
-        {
-            "Country": "Sierra Leone",
-            "CountryProfit": 1695225.1800000002,
-            "CountryRevenue": 6793129.51
-        },
-        {
-            "Country": "Comoros",
-            "CountryProfit": 2004330.78,
-            "CountryRevenue": 8999886.92
-        },
-        {
-            "Country": "Gabon",
-            "CountryProfit": 2230754.2600000002,
-            "CountryRevenue": 7350658.5600000005
-        },
-        {
-            "Country": "Mauritania",
-            "CountryProfit": 1004562.06,
-            "CountryRevenue": 6825381.02
-        },
-        {
-            "Country": "Swaziland",
-            "CountryProfit": 3174509.5,
-            "CountryRevenue": 12845719.41
-        },
-        {
-            "Country": "Chad",
-            "CountryProfit": 2947612.6799999997,
-            "CountryRevenue": 17278040.69
-        },
-        {
-            "Country": "Botswana",
-            "CountryProfit": 1122371.61,
-            "CountryRevenue": 2758990.9899999998
-        },
-        {
-            "Country": "Guinea",
-            "CountryProfit": 1862851.6799999997,
-            "CountryRevenue": 9896306.25
-        },
-        {
-            "Country": "South Sudan",
-            "CountryProfit": 3515378.380000001,
-            "CountryRevenue": 12890088.979999999
-        },
-        {
-            "Country": "Niger",
-            "CountryProfit": 4038322.8000000003,
-            "CountryRevenue": 12738142.62
-        },
-        {
-            "Country": "Liberia",
-            "CountryProfit": 1691664.6,
-            "CountryRevenue": 4401652.94
-        },
-        {
-            "Country": "Burundi",
-            "CountryProfit": 2713439.3,
-            "CountryRevenue": 7032758.550000001
-        },
-        {
-            "Country": "Rwanda",
-            "CountryProfit": 1205530.93,
-            "CountryRevenue": 4984069.19
-        },
-        {
             "Country": "Malawi",
             "CountryProfit": 3643128.93,
-            "CountryRevenue": 10722230.079999998
+            "CountryRevenue": 10722230.08
         },
         {
             "Country": "Namibia",
@@ -793,64 +708,89 @@
             "CountryRevenue": 4790409.36
         },
         {
-            "Country": "Ghana",
-            "CountryProfit": 4736567.14,
-            "CountryRevenue": 21267908.499999996
-        },
-        {
-            "Country": "Togo",
-            "CountryProfit": 797010.01,
-            "CountryRevenue": 1734332.62
-        },
-        {
-            "Country": "Ethiopia",
-            "CountryProfit": 1201089.03,
-            "CountryRevenue": 4632012.47
-        },
-        {
-            "Country": "Eritrea",
-            "CountryProfit": 589772.52,
-            "CountryRevenue": 1474455.62
-        },
-        {
-            "Country": "Sudan",
-            "CountryProfit": 3260863.69,
-            "CountryRevenue": 9824498.98
-        },
-        {
-            "Country": "Lesotho",
-            "CountryProfit": 2645558.19,
-            "CountryRevenue": 9349544.030000001
-        },
-        {
             "Country": "Mozambique",
-            "CountryProfit": 2129518.9200000004,
+            "CountryProfit": 2129518.92,
             "CountryRevenue": 9093023.98
         },
         {
-            "Country": "Uganda",
-            "CountryProfit": 970244.28,
-            "CountryRevenue": 2402771.36
+            "Country": "Swaziland",
+            "CountryProfit": 3174509.5,
+            "CountryRevenue": 12845719.41
         },
         {
-            "Country": "Cameroon",
-            "CountryProfit": 34407.36,
-            "CountryRevenue": 95209.92
+            "Country": "Sierra Leone",
+            "CountryProfit": 1695225.18,
+            "CountryRevenue": 6793129.51
         },
         {
-            "Country": "Angola",
-            "CountryProfit": 4541144.42,
-            "CountryRevenue": 15643032.02
+            "Country": "Burundi",
+            "CountryProfit": 2713439.3,
+            "CountryRevenue": 7032758.55
         },
         {
-            "Country": "Central African Republic",
-            "CountryProfit": 5338519.48,
-            "CountryRevenue": 16591036.850000001
+            "Country": "Liberia",
+            "CountryProfit": 1691664.6,
+            "CountryRevenue": 4401652.94
+        },
+        {
+            "Country": "Sao Tome and Principe",
+            "CountryProfit": 2531047.8,
+            "CountryRevenue": 6662225.65
         },
         {
             "Country": "Benin",
             "CountryProfit": 1952198.49,
-            "CountryRevenue": 9039257.059999999
+            "CountryRevenue": 9039257.06
+        },
+        {
+            "Country": "Gabon",
+            "CountryProfit": 2230754.26,
+            "CountryRevenue": 7350658.56
+        },
+        {
+            "Country": "Burkina Faso",
+            "CountryProfit": 1236888.31,
+            "CountryRevenue": 3779357.44
+        },
+        {
+            "Country": "South Africa",
+            "CountryProfit": 2949715.94,
+            "CountryRevenue": 11920602.36
+        },
+        {
+            "Country": "Nigeria",
+            "CountryProfit": 784072.25,
+            "CountryRevenue": 2053657.99
+        },
+        {
+            "Country": "Rwanda",
+            "CountryProfit": 1205530.93,
+            "CountryRevenue": 4984069.19
+        },
+        {
+            "Country": "Mauritius ",
+            "CountryProfit": 2048477.15,
+            "CountryRevenue": 5649551.29
+        },
+        {
+            "Country": "Zimbabwe",
+            "CountryProfit": 1543572.91,
+            "CountryRevenue": 6928978.02
+        },
+        {
+            "Country": "Djibouti",
+            "CountryProfit": 2551054.32,
+            "CountryRevenue": 7896155.06
+        },
+        {
+            "Country": "Guinea-Bissau",
+            "CountryProfit": 2598300.84,
+            "CountryRevenue": 6512548.69
+        },
+        {
+            "Country": "Republic of the Congo",
+            "CountryProfit": 1005205.72,
+            "CountryRevenue": 4243168.94
         },
         {
             "Country": "Cote d'Ivoire",
@@ -858,34 +798,44 @@
             "CountryRevenue": 5121515.92
         },
         {
-            "Country": "Senegal",
-            "CountryProfit": 2237729.3,
-            "CountryRevenue": 8204766.319999999
+            "Country": "Ethiopia",
+            "CountryProfit": 1201089.03,
+            "CountryRevenue": 4632012.47
         },
         {
-            "Country": "Seychelles ",
-            "CountryProfit": 1533276.65,
-            "CountryRevenue": 6980875.62
+            "Country": "Cape Verde",
+            "CountryProfit": 1395524.45,
+            "CountryRevenue": 3629118.65
         },
         {
-            "Country": "The Gambia",
-            "CountryProfit": 777887.8600000001,
-            "CountryRevenue": 1898327.32
+            "Country": "Ghana",
+            "CountryProfit": 4736567.14,
+            "CountryRevenue": 21267908.5
         },
         {
-            "Country": "Sao Tome and Principe",
-            "CountryProfit": 2531047.8000000003,
-            "CountryRevenue": 6662225.65
+            "Country": "Cameroon",
+            "CountryProfit": 34407.36,
+            "CountryRevenue": 95209.92
         },
         {
-            "Country": "Zimbabwe",
-            "CountryProfit": 1543572.9100000001,
-            "CountryRevenue": 6928978.02
+            "Country": "Central African Republic",
+            "CountryProfit": 5338519.48,
+            "CountryRevenue": 16591036.85
         },
         {
-            "Country": "Guinea-Bissau",
-            "CountryProfit": 2598300.8400000003,
-            "CountryRevenue": 6512548.69
+            "Country": "Kenya",
+            "CountryProfit": 2354392.33,
+            "CountryRevenue": 9138321.08
+        },
+        {
+            "Country": "Tanzania",
+            "CountryProfit": 1792464.48,
+            "CountryRevenue": 6794687.03
+        },
+        {
+            "Country": "Botswana",
+            "CountryProfit": 1122371.61,
+            "CountryRevenue": 2758990.99
         },
         {
             "Country": "Zambia",
@@ -894,8 +844,23 @@
         },
         {
             "Country": "Madagascar",
-            "CountryProfit": 1552713.6700000002,
-            "CountryRevenue": 3061002.8000000003
+            "CountryProfit": 1552713.67,
+            "CountryRevenue": 3061002.8
+        },
+        {
+            "Country": "Equatorial Guinea",
+            "CountryProfit": 2114164.0,
+            "CountryRevenue": 7753130.1
+        },
+        {
+            "Country": "Guinea",
+            "CountryProfit": 1862851.68,
+            "CountryRevenue": 9896306.25
+        },
+        {
+            "Country": "Eritrea",
+            "CountryProfit": 589772.52,
+            "CountryRevenue": 1474455.62
         },
         {
             "Country": "Mali",
@@ -903,39 +868,74 @@
             "CountryRevenue": 9088046.78
         },
         {
-            "Country": "Burkina Faso",
-            "CountryProfit": 1236888.31,
-            "CountryRevenue": 3779357.4400000004
-        },
-        {
-            "Country": "South Africa",
-            "CountryProfit": 2949715.94,
-            "CountryRevenue": 11920602.36
-        },
-        {
-            "Country": "Kenya",
-            "CountryProfit": 2354392.33,
-            "CountryRevenue": 9138321.08
-        },
-        {
-            "Country": "Cape Verde",
-            "CountryProfit": 1395524.45,
-            "CountryRevenue": 3629118.65
-        },
-        {
-            "Country": "Nigeria",
-            "CountryProfit": 784072.25,
-            "CountryRevenue": 2053657.9900000002
-        },
-        {
-            "Country": "Mauritius ",
-            "CountryProfit": 2048477.15,
-            "CountryRevenue": 5649551.29
+            "Country": "Comoros",
+            "CountryProfit": 2004330.78,
+            "CountryRevenue": 8999886.92
         },
         {
             "Country": "Democratic Republic of the Congo",
             "CountryProfit": 1626902.92,
-            "CountryRevenue": 5999548.380000001
+            "CountryRevenue": 5999548.38
+        },
+        {
+            "Country": "Senegal",
+            "CountryProfit": 2237729.3,
+            "CountryRevenue": 8204766.32
+        },
+        {
+            "Country": "Niger",
+            "CountryProfit": 4038322.8,
+            "CountryRevenue": 12738142.62
+        },
+        {
+            "Country": "Sudan",
+            "CountryProfit": 3260863.69,
+            "CountryRevenue": 9824498.98
+        },
+        {
+            "Country": "Seychelles ",
+            "CountryProfit": 1533276.65,
+            "CountryRevenue": 6980875.62
+        },
+        {
+            "Country": "Chad",
+            "CountryProfit": 2947612.68,
+            "CountryRevenue": 17278040.69
+        },
+        {
+            "Country": "South Sudan",
+            "CountryProfit": 3515378.38,
+            "CountryRevenue": 12890088.98
+        },
+        {
+            "Country": "Angola",
+            "CountryProfit": 4541144.42,
+            "CountryRevenue": 15643032.02
+        },
+        {
+            "Country": "Mauritania",
+            "CountryProfit": 1004562.06,
+            "CountryRevenue": 6825381.02
+        },
+        {
+            "Country": "Togo",
+            "CountryProfit": 797010.01,
+            "CountryRevenue": 1734332.62
+        },
+        {
+            "Country": "Lesotho",
+            "CountryProfit": 2645558.19,
+            "CountryRevenue": 9349544.03
+        },
+        {
+            "Country": "The Gambia",
+            "CountryProfit": 777887.86,
+            "CountryRevenue": 1898327.32
+        },
+        {
+            "Country": "Uganda",
+            "CountryProfit": 970244.28,
+            "CountryRevenue": 2402771.36
         }
     ]
 }

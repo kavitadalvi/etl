@@ -33,6 +33,7 @@ class Pipeline():
         self.source_filename = source_filename
         self.source_file_format = "csv"
         self.config = {}
+        self.source_fields = []
         self.preprocess_tasks = []
 
     def get_config(self):
@@ -48,6 +49,13 @@ class Pipeline():
         except ScannerError:
             logging.error("Cannot scan file %s", self.transform_config_file)
             sys.exit(1)
+
+        try:
+            self.source_fields = self.config['source_fields']
+        except KeyError:
+            logging.error('Source fields mandatory')
+            sys.exit(1)
+
 
     def get_preprocess_tasks(self, config):
         '''
@@ -393,18 +401,18 @@ def calc_revenue(sales_dict, region, country):
     '''
     Calculate total revenue per region-country in transformed data
     '''
-    revenue = 0
+    revenue = 0.00
     for value in sales_dict.values():
         if value['Region']==region and value['Country']==country:
             revenue = revenue + float(value['Total Revenue'])
-    return revenue
+    return round(revenue,2)
 
 def calc_profit(sales_dict, region, country):
     '''
     Calculate total profit per region-country in transformed data
     '''
-    profit = 0
+    profit = 0.00
     for value in sales_dict.values():
         if value['Region']==region and value['Country']==country:
             profit = profit + float(value['Total Profit'])
-    return profit
+    return round(profit,2)
