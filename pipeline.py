@@ -313,7 +313,7 @@ class Transform(Pipeline):
         # write to db
         db_con = self.get_db_connection()
         db_name = db_con[self.config['output']['db']['name']]
-        coll_name = db_name[self.transform_name+'_rejected']
+        coll_name = db_name[self.transform_name.replace('-','_')+'_rejected']
         if coll_name.estimated_document_count() > 0:
             coll_name.drop()
         coll_name.insert_one(data)
