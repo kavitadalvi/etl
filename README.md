@@ -35,8 +35,8 @@ _Python 3.8 or higher_
 
 # Execution
     
-    python etl.py -n "sales-summary" -c "<APP_DIR_PATH>/app.yaml" -f "<APP_DIR_PATH>/input/sales-records.csv"    
-    python etl.py -n "sales-aggregate" -c "<APP_DIR_PATH>/app.yaml" -f "<APP_DIR_PATH>/input/sales-records.csv"
+    python etl.py -n "sales-summary" -c "<APP_DIR_PATH>/app.yaml" 
+    python etl.py -n "sales-aggregate" -c "<APP_DIR_PATH>/app.yaml"
     
    where,
     
