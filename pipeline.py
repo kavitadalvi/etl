@@ -15,11 +15,11 @@ import utils
 ERR_INCOMPLETE_DATA_ROW = "Some fields missing data"
 INVALID_MSG="Invalid ({}):{}"
 MSG_INVALID_ROW = 'Row %s --> Invalid %s : %s'
-PREPROCESS_TASKS = [
-    'data_validations_check',
-    'date_field_check',
-    'float_field_check',
-    'number_field_check'
+PREPROCESS_CHECKS = [
+    'data',
+    'date_field',
+    'float_field',
+    'number_field'
     ]
 
 class Pipeline():
@@ -27,14 +27,18 @@ class Pipeline():
     Initialise and setup configurations
     to run the stages in the pipeline
     '''
-    def __init__(self, transform_name, source_filename):
+    # pylint: disable=too-many-instance-attributes
+    # 9 is reasonable in this case
+    def __init__(self, transform_name):
         self.transform_name = transform_name
         self.transform_config_file = "transforms\\" + transform_name + ".yaml"
-        self.source_filename = source_filename
-        self.source_file_format = "csv"
         self.config = {}
+        self.source_file_format = "csv"
+        self.source_file = ''
         self.source_fields = []
-        self.preprocess_tasks = []
+        self.output_file = ''
+        self.output_fields = []
+        self.preprocess_checks = []
 
     def get_config(self):
         '''
@@ -50,46 +54,73 @@ class Pipeline():
             logging.error("Cannot scan file %s", self.transform_config_file)
             sys.exit(1)
 
+        logging.info('Source file format --> %s', self.source_file_format)
+
         try:
-            self.source_fields = self.config['source_fields']
+            self.source_file = self.config['source']['file']
         except KeyError:
-            logging.error('Source fields mandatory')
+            logging.error('Source filename not specified')
             sys.exit(1)
+        else:
+            logging.info('Source file: %s', self.source_file)
 
+        try:
+            self.source_fields = self.config['source']['fields']
+        except KeyError:
+            logging.error('Source fields not specified')
+            sys.exit(1)
+        else:
+            logging.info('Source fields: %s', self.source_fields)
 
-    def get_preprocess_tasks(self, config):
+        try:
+            self.output_file = self.config['output']['file']
+        except KeyError:
+            logging.error('Output filename not specified')
+            sys.exit(1)
+        else:
+            logging.info('Output file: %s', self.output_file)
+
+        try:
+            self.output_fields = self.config['output']['fields']
+        except KeyError:
+            logging.error('Output fields not specified')
+            sys.exit(1)
+        else:
+            logging.info('Output fields: %s', self.output_fields)
+
+    def configure_preprocess_checks(self):
         '''
-        read preprocess/validation tasks required
+        read preprocess/validation tasks
         '''
         # data completeness check mandatory
-        self.preprocess_tasks = ['data_completeness_check']
-
+        self.preprocess_checks = ['data_completeness']
         # rest of the preprocess tasks
-        for task in PREPROCESS_TASKS:
+        for task in PREPROCESS_CHECKS:
             try:
-                required_task = config[task]
+                required_task = self.config['checks'][task]
             except KeyError:
-                logging.debug('%s not required', task)
+                logging.warning('Preprocess check - %s - not specified', task)
+                continue
             if required_task:
-                self.preprocess_tasks.append(task)
+                self.preprocess_checks.append(task)
 
 class Extract(Pipeline):
     '''
     Methods required to extract data from given source file
     '''
     def __init__(self, pipeline):
-        Pipeline.__init__(self, pipeline.transform_name, pipeline.source_filename)
-        self.source_fields = pipeline.config['source_fields']
+        Pipeline.__init__(self, pipeline.transform_name)
+        self.source_fields = pipeline.source_fields
+        self.source_file = pipeline.source_file
         self.source_data = {}
 
     def extract(self):
         '''
         Extract data from source file
         '''
-        logging.info('Source file format --> %s', self.source_file_format)
         if self.source_file_format.lower() == 'csv':
             try:
-                with open( self.source_filename, 'r', encoding='utf-8' ) as source_f:
+                with open( self.source_file, 'r', encoding='utf-8' ) as source_f:
                     data_rows = list(csv.reader(source_f))
             except FileNotFoundError:
                 logging.error('Source file not found')
@@ -113,15 +144,17 @@ class Transform(Pipeline):
     of input source data
     '''
     # pylint: disable=too-many-instance-attributes
-    # 12 is reasonable in this case
+    # 9 is reasonable in this case
     def __init__(self, pipeline, extract):
         '''
         inputs:
         pipeline - instance of class Pipeline
         source_data - source data rows as nested dictionary
         '''
-        Pipeline.__init__(self, pipeline.transform_name, pipeline.source_filename)
-        self.preprocess_tasks = pipeline.preprocess_tasks
+        Pipeline.__init__(self, pipeline.transform_name)
+        self.preprocess_checks = pipeline.preprocess_checks
+        self.output_file = pipeline.output_file
+        self.output_fields = pipeline.output_fields
         self.config = pipeline.config
         self.source_fields = extract.source_fields
         self.source_data = extract.source_data
@@ -133,7 +166,6 @@ class Transform(Pipeline):
             self.transformed_data[row]['is_valid'] = True
             self.transformed_data[row]['err_msg'] = []
         self.rejected_data = {}
-        self.output_file = pipeline.config['output_file']
         self.lookup_to_expand_fields = {}
 
     def check_missing_fields(self):
@@ -162,18 +194,18 @@ class Transform(Pipeline):
                         self.transformed_data[row]['is_valid'] = False
                         self.transformed_data[row]['err_msg'].append(err)
 
-    def run_data_completeness_check(self):
+    def check_data_completeness(self):
         '''
         Checks all fields have values
         '''
         self.check_missing_fields()
         self.check_missing_data()
 
-    def run_data_validations_check(self):
+    def check_data(self):
         '''
         Checks fields have expected values
         '''
-        valid_data_map = self.config['data_validations_check']
+        valid_data_map = self.config['checks']['data']
         for field, valid_values in valid_data_map.items():
             for row in self.source_data.keys():
                 if ERR_INCOMPLETE_DATA_ROW not in self.transformed_data[row]['err_msg']:
@@ -185,11 +217,11 @@ class Transform(Pipeline):
                         self.transformed_data[row]['is_valid'] = False
                         self.transformed_data[row]['err_msg'].append(err)
 
-    def run_date_field_check(self):
+    def check_date_field(self):
         '''
         Checks date fields have valid values
         '''
-        fields_to_check = self.config['date_field_check']
+        fields_to_check = self.config['checks']['date_field']
         for field in fields_to_check:
             for row in self.source_data.keys():
                 if ERR_INCOMPLETE_DATA_ROW not in self.transformed_data[row]['err_msg']:
@@ -201,11 +233,11 @@ class Transform(Pipeline):
                         self.transformed_data[row]['is_valid'] = False
                         self.transformed_data[row]['err_msg'].append(err)
 
-    def run_float_field_check(self):
+    def check_float_field(self):
         '''
         Checks float fields have valid values
         '''
-        fields_to_check = self.config['float_field_check']
+        fields_to_check = self.config['checks']['float_field']
         for field in fields_to_check:
             for row in self.source_data.keys():
                 if ERR_INCOMPLETE_DATA_ROW not in self.transformed_data[row]['err_msg']:
@@ -213,15 +245,17 @@ class Transform(Pipeline):
                     if not utils.is_numeric(self.source_data[row][field]):
                         err.append(INVALID_MSG.format(field,self.source_data[row][field]))
                         logging.debug(MSG_INVALID_ROW, row, field, self.source_data[row][field])
+                    else:
+                        self.transformed_data[row][field] = float(self.transformed_data[row][field])
                     if len(err) > 0:
                         self.transformed_data[row]['is_valid'] = False
                         self.transformed_data[row]['err_msg'].append(err)
 
-    def run_number_field_check(self):
+    def check_number_field(self):
         '''
         Checks numeric fields have valid values
         '''
-        fields_to_check = self.config['number_field_check']
+        fields_to_check = self.config['checks']['number_field']
         for field in fields_to_check:
             for row in self.source_data.keys():
                 if ERR_INCOMPLETE_DATA_ROW not in self.transformed_data[row]['err_msg']:
@@ -229,18 +263,20 @@ class Transform(Pipeline):
                     if not self.source_data[row][field].isdigit():
                         err.append(INVALID_MSG.format(field,self.source_data[row][field]))
                         logging.debug(MSG_INVALID_ROW, row, field, self.source_data[row][field])
+                    else:
+                        self.transformed_data[row][field] = int(self.transformed_data[row][field])
                     if len(err) > 0:
                         self.transformed_data[row]['is_valid'] = False
                         self.transformed_data[row]['err_msg'].append(err)
 
-    def run_preprocess_tasks(self):
+    def run_preprocess(self):
         '''
         Executing preprocess/validation tasks of pipeline
         '''
-        for task in self.preprocess_tasks:
+        for task in self.preprocess_checks:
             logging.info('Task: %s', task)
             try:
-                getattr(Transform, 'run_'+task)(self)
+                getattr(Transform, 'check_'+task)(self)
             except AttributeError:
                 logging.warning('Task \'%s\' undefined', task)
                 continue
@@ -253,8 +289,8 @@ class Transform(Pipeline):
         db_port=''
         # get db connection
         try:
-            db_host = self.config['target_db']['host']
-            db_port = self.config['target_db']['port']
+            db_host = self.config['output']['db']['host']
+            db_port = self.config['output']['db']['port']
         except KeyError:
             err_text = 'DB host/port not specified.'
             logging.error(err_text)
@@ -269,16 +305,16 @@ class Transform(Pipeline):
         else:
             return connect
 
-    def write_rejected_row_to_db(self):
+    def write_rejected_rows_to_db(self):
         '''
         Write data from dictionary into database
         '''
         data = copy.deepcopy(self.rejected_data)
         # write to db
         db_con = self.get_db_connection()
-        db_name = db_con[self.config['target_db']['name']]
-        coll_name = db_name['sales_rejected']
-        if coll_name.count() > 0:
+        db_name = db_con[self.config['output']['db']['name']]
+        coll_name = db_name[self.transform_name+'_rejected']
+        if coll_name.estimated_document_count() > 0:
             coll_name.drop()
         coll_name.insert_one(data)
         del data
@@ -287,7 +323,7 @@ class Transform(Pipeline):
         '''
         Replace data with expanded data if setup
         '''
-        for field, field_exp in self.config['expand_output'].items():
+        for field, field_exp in self.config['output']['field_expansion'].items():
             for row, data in self.transformed_data.items():
                 if self.transformed_data[row][field] in field_exp.keys():
                     self.transformed_data[row][field] = field_exp[data[field]]
@@ -301,7 +337,7 @@ class Transform(Pipeline):
             Float field validations
             Digit field validations
         '''
-        self.run_preprocess_tasks()
+        self.run_preprocess()
 
         for row in [k for (k,v) in self.transformed_data.items() if v['is_valid'] is False]:
             self.rejected_data[row] = self.source_data[row]
@@ -311,79 +347,78 @@ class Transform(Pipeline):
             del self.transformed_data[row]
             logging.debug('Removed row %s', row)
 
+        logging.info('%s rows processed', len(self.transformed_data))
+
         if len(self.rejected_data) > 0:
             logging.warning( "%s row(s) rejected", len(self.rejected_data))
+            self.write_rejected_rows_to_db()
 
-        self.write_rejected_row_to_db()
-
-        if 'expand_output' in self.config.keys():
+        if 'field_expansion' in self.config['output'].keys():
             self.transform_data_expansion()
 
-        self.output_file = self.config['output_file']
-        logging.info("Output file --> %s", self.output_file)
-
-    def gen_sales_aggregate(self):
+    # pylint: disable=too-many-locals
+    # 9 is reasonable in this case
+    def gen_output(self):
         '''
-        Generate sales aggregate summary from transformed data
+        Generates output as per configuration
         '''
+        intermediate_data = {}
         result = {}
-        regions = set(v['Region'] for k,v in self.transformed_data.items())
-        for region in regions:
-            countries = [
-                v['Country'] for k,v in self.transformed_data.items() if v['Region']==region
-                ]
-            countries = set(countries)
-            region_list = []
-            for country in countries:
-                profit = calc_profit(self.transformed_data,region,country)
-                revenue = calc_revenue(self.transformed_data,region,country)
-                region_list.append({
-                    "Country": country
-                    ,"CountryRevenue": revenue
-                    ,"CountryProfit": profit}
-                    )
-            result[region] = region_list
-        return result
+        group_fields = self.config['output']['group_fields']
+        leaf_fields = self.config['output']['leaf_fields']
+        for row_data in self.transformed_data.values():
+            leaf_data = []
+            group_key=tuple(i for i in [row_data[field] for field in group_fields])
+            leaf_data = {v[0]: row_data[k] for k,v in leaf_fields.items()}
 
-    def gen_sales_summary(self):
-        '''
-        Generate sales summary from the transformed data
-        '''
-        result = {}
-        regions = set(v['Region'] for k,v in self.transformed_data.items())
-        for region in regions:
-            sales_channels = [
-                v['Sales Channel'] for k,v in self.transformed_data.items() if v['Region']==region
-                ]
-            sales_channels = set(sales_channels)
-            sales_channel_dict = {}
-            for sales_channel in sales_channels:
-                summary_list = []
-                summary_list = [{
-                        "Country": v['Country'],
-                        "ItemType": v['Item Type'],
-                        "OrderPriority": v['Order Priority'],
-                        "OrderDate": v['Order Date'],
-                        "OrderId": v['Order ID'],
-                        "ShipDate": v['Ship Date'],
-                        "UnitsSold": v['Units Sold'],
-                        "UnitPrice": v['Unit Price'],
-                        "UnitCost": v['Unit Cost'],
-                        "TotalRevenue": v['Total Revenue'],
-                        "TotalCost": v['Total Cost'],
-                        "TotalProfit": v['Total Profit']
-                } for k,v in self.transformed_data.items()
-                if v['Region']==region and v['Sales Channel'] == sales_channel]
-                sales_channel_dict[sales_channel] = summary_list
-            result[region] = sales_channel_dict
+            # Add the row if key not already present
+            if group_key not in intermediate_data.keys():
+                intermediate_data[group_key] = []
+                intermediate_data[group_key].append(leaf_data)
+                continue
+
+            # If key exists, add row only if lower level of keys do not exists
+            # Else perform the aggregation and update the lower level of key rows
+            curr_data = []
+            curr_data = intermediate_data[group_key].copy()
+            new_data_non_calc = {}
+            new_data_non_calc = {v[0]: row_data[k] for k,v in leaf_fields.items() if v[1]==''}
+            i = 0
+            found_match=0
+            for curr in curr_data:
+                curr_data_non_calc = {}
+                curr_data_non_calc = {v[0]: curr[v[0]] for v in leaf_fields.values() if v[1]==''}
+                if curr_data_non_calc == new_data_non_calc:
+                    found_match = 1
+                    for leaf_field in leaf_fields.values():
+                        if leaf_field[1] == 'sum':
+                            curr[leaf_field[0]] += leaf_data[leaf_field[0]]
+                            curr[leaf_field[0]] = round(curr[leaf_field[0]],2)
+                        elif leaf_field[1] == 'avg':
+                            curr[leaf_field[0]] += leaf_data[leaf_field[0]]
+                            curr[leaf_field[0]] /= 2
+                            curr[leaf_field[0]] = round(curr[leaf_field[0]],2)
+                curr_data[i] = curr
+                i = i + 1
+            if found_match == 1:
+                intermediate_data[group_key] = curr_data
+            else:
+                intermediate_data[group_key].append(leaf_data)
+        for key, data in intermediate_data.items():
+            utils.merge_dicts(target=result, source=utils.get_data_by_group(list(key), data))
         return result
 
     def write_json(self, data):
         '''
         Write data from dictionary to json file
         '''
-        with open( self.output_file, 'w' ) as json_file:
-            json_file.write( json.dumps( data, indent=4, sort_keys=True ) )
+        try:
+            with open( self.output_file, 'w' ) as json_file:
+                json_file.write( json.dumps( data, indent=4, sort_keys=True ) )
+        except FileNotFoundError:
+            logging.error('Error writing to file - \'%s\'. Validate path.', self.output_file)
+        else:
+            logging.info('Data written to file - \'%s\'', self.output_file)
 
     def write_to_db(self, data):
         '''
@@ -391,28 +426,8 @@ class Transform(Pipeline):
         '''
         # write to db
         db_con = self.get_db_connection()
-        db_name = db_con[self.config['target_db']['name']]
-        coll_name = db_name[self.config['target_db']['collection']]
+        db_name = db_con[self.config['output']['db']['name']]
+        coll_name = db_name[self.config['output']['db']['collection']]
         if coll_name.count() > 0:
             coll_name.drop()
         coll_name.insert_one(data)
-
-def calc_revenue(sales_dict, region, country):
-    '''
-    Calculate total revenue per region-country in transformed data
-    '''
-    revenue = 0.00
-    for value in sales_dict.values():
-        if value['Region']==region and value['Country']==country:
-            revenue = revenue + float(value['Total Revenue'])
-    return round(revenue,2)
-
-def calc_profit(sales_dict, region, country):
-    '''
-    Calculate total profit per region-country in transformed data
-    '''
-    profit = 0.00
-    for value in sales_dict.values():
-        if value['Region']==region and value['Country']==country:
-            profit = profit + float(value['Total Profit'])
-    return round(profit,2)

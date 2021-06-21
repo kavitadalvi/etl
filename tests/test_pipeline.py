@@ -1,71 +1,310 @@
+from typing import final
 import pytest
 import unittest.mock as mock
 from unittest.mock import mock_open
 import yaml
 import pipeline
+from deepdiff import DeepDiff
 
 TRANSFORM_NAME = 'sales-summary'
 SOME_INVALID_TRANSFORM_NAME = 'some invalid transform name'
 SOURCE_FILENAME = "sales-records.csv"
 TRANSFORM_CONFIG_VALID = '''
-source_fields: [Region,Country,Item Type,Sales Channel,Order Priority,Order Date,Order ID,Ship Date,Units Sold,Unit Price,Unit Cost,Total Revenue,Total Cost,Total Profit]
-data_validations_check:
-  Region: [Asia,Australia and Oceania,Central America and the Caribbean,Europe,Middle East and North Africa,North America,Sub-Saharan Africa]
-  Sales Channel: [Online,Offline]
-  Order Priority: [H,M,L,C]
-date_field_check: [Order Date,Ship Date]
-float_field_check: [Unit Price,Unit Cost,Total Revenue,Total Cost,Total Profit]
-number_field_check: [Units Sold]
-output_file: output/sales-transformed.json
-expand_output:
-  Order Priority:
-    H: High
-    M: Medium
-    L: Low
-    C: Critical
+source:
+  file: input/sales-records.csv
+  fields: [Region,Country,Item Type,Sales Channel,Order Priority,Order Date,Order ID,Ship Date,Units Sold,Unit Price,Unit Cost,Total Revenue,Total Cost,Total Profit]
+checks:
+  data:
+    Region: [Asia,Australia and Oceania,Central America and the Caribbean,Europe,Middle East and North Africa,North America,Sub-Saharan Africa]
+    Sales Channel: [Online,Offline]
+    Order Priority: [H,M,L,C]
+  date_field: [Order Date,Ship Date]
+  float_field: [Unit Price,Unit Cost,Total Revenue,Total Cost,Total Profit]
+  number_field: [Units Sold]
+output:
+  file: output/sales-transformed.json
+  fields: [Region, Sales Channel, Country, Item Type, Order Priority, Order Date, Order ID, Ship Date, Units Sold, Unit Price, Unit Cost, Total Revenue, Total Cost, Total Profit]
+  group_fields: [Region,Sales Channel]
+  leaf_fields:
+    Country: [Country, '']
+    Item Type: [ItemType, '']
+    Order Priority: [OrderPriority, '']
+    Order Date: [OrderDate, '']
+    Order ID: [OrderId, '']
+    Ship Date: [ShipDate, '']
+    Units Sold: [UnitsSold, sum]
+    Unit Price: [UnitPrice, sum]
+    Unit Cost: [UnitCost, sum]
+    Total Revenue: [TotalRevenue, avg]
+    Total Cost: [TotalCost, sum]
+    Total Profit: [TotalProfit, sum]
+  field_expansion:
+    Order Priority:
+      H: High
+      M: Medium
+      L: Low
+      C: Critical
+  db:
+    host: localhost
+    port: 27017
+    name: sales
+    collection: sales_summary
 '''
-TRANSFORM_CONFIG_VALID_DATA = '''
-source_fields: [Region,Country,Item Type,Sales Channel,Order Priority,Order Date,Order ID,Ship Date,Units Sold,Unit Price,Unit Cost,Total Revenue,Total Cost,Total Profit]
-data_validations_check:
-  Region: [Asia,Australia and Oceania,Central America and the Caribbean,Europe,Middle East and North Africa,North America,Sub-Saharan Africa]
-  Sales Channel: [Online,Offline]
-  Order Priority: [H,M,L,C]
-date_field_check: [Order Date,Ship Date]
-float_field_check: [Unit Price,Unit Cost,Total Revenue,Total Cost,Total Profit]
-number_field_check: [Units Sold]
-output_file: output/sales-transformed.json
-expand_output:
-  Order Priority:
-    H: High
-    M: Medium
-    L: Low
-    C: Critical
-target_db:
-  host: localhost
-  port: 27017
-  name: sales
-  collection: sales_summary
+TRANSFORM_CONFIG_SOURCE_FILENAME_NOT_SPECIFIED = '''
+source:
+  fields: [Region,Country,Item Type,Sales Channel,Order Priority,Order Date,Order ID,Ship Date,Units Sold,Unit Price,Unit Cost,Total Revenue,Total Cost,Total Profit]
+checks:
+  data:
+    Region: [Asia,Australia and Oceania,Central America and the Caribbean,Europe,Middle East and North Africa,North America,Sub-Saharan Africa]
+    Sales Channel: [Online,Offline]
+    Order Priority: [H,M,L,C]
+  date_field: [Order Date,Ship Date]
+  float_field: [Unit Price,Unit Cost,Total Revenue,Total Cost,Total Profit]
+  number_field: [Units Sold]
+output:
+  file: output/sales-transformed.json
+  fields: [Region, Sales Channel, Country, Item Type, Order Priority, Order Date, Order ID, Ship Date, Units Sold, Unit Price, Unit Cost, Total Revenue, Total Cost, Total Profit]
+  group_fields: [Region,Sales Channel]
+  leaf_fields:
+    Country: [Country, '']
+    Item Type: [ItemType, '']
+    Order Priority: [OrderPriority, '']
+    Order Date: [OrderDate, '']
+    Order ID: [OrderId, '']
+    Ship Date: [ShipDate, '']
+    Units Sold: [UnitsSold, sum]
+    Unit Price: [UnitPrice, sum]
+    Unit Cost: [UnitCost, sum]
+    Total Revenue: [TotalRevenue, sum]
+    Total Cost: [TotalCost, sum]
+    Total Profit: [TotalProfit, sum]
+  field_expansion:
+    Order Priority:
+      H: High
+      M: Medium
+      L: Low
+      C: Critical
+  db:
+    host: localhost
+    port: 27017
+    name: sales
+    collection: sales_summary
 '''
 TRANSFORM_CONFIG_SOURCE_FIELDS_NOT_SPECIFIED = '''
-data_validations_check:
-  Region: [Asia,Australia and Oceania,Central America and the Caribbean,Europe,Middle East and North Africa,North America,Sub-Saharan Africa]
-  Sales Channel: [Online,Offline]
-  Order Priority: [H,M,L,C]
-date_field_check: [Order Date,Ship Date]
-float_field_check: [Unit Price,Unit Cost,Total Revenue,Total Cost,Total Profit]
-number_field_check: [Units Sold]
-output_file: output/sales-transformed.json
-expand_output:
-  Order Priority:
-    H: High
-    M: Medium
-    L: Low
-    C: Critical
+source:
+  file: input/sales-records.csv
+checks:
+  data:
+    Region: [Asia,Australia and Oceania,Central America and the Caribbean,Europe,Middle East and North Africa,North America,Sub-Saharan Africa]
+    Sales Channel: [Online,Offline]
+    Order Priority: [H,M,L,C]
+  date_field: [Order Date,Ship Date]
+  float_field: [Unit Price,Unit Cost,Total Revenue,Total Cost,Total Profit]
+  number_field: [Units Sold]
+output:
+  file: output/sales-transformed.json
+  fields: [Region, Sales Channel, Country, Item Type, Order Priority, Order Date, Order ID, Ship Date, Units Sold, Unit Price, Unit Cost, Total Revenue, Total Cost, Total Profit]
+  group_fields: [Region,Sales Channel]
+  leaf_fields:
+    Country: [Country, '']
+    Item Type: [ItemType, '']
+    Order Priority: [OrderPriority, '']
+    Order Date: [OrderDate, '']
+    Order ID: [OrderId, '']
+    Ship Date: [ShipDate, '']
+    Units Sold: [UnitsSold, sum]
+    Unit Price: [UnitPrice, sum]
+    Unit Cost: [UnitCost, sum]
+    Total Revenue: [TotalRevenue, sum]
+    Total Cost: [TotalCost, sum]
+    Total Profit: [TotalProfit, sum]
+  field_expansion:
+    Order Priority:
+      H: High
+      M: Medium
+      L: Low
+      C: Critical
+  db:
+    host: localhost
+    port: 27017
+    name: sales
+    collection: sales_summary
+'''
+TRANSFORM_CONFIG_OUTPUT_FILENAME_NOT_SPECIFIED = '''
+source:
+  file: input/sales-records.csv
+  fields: [Region,Country,Item Type,Sales Channel,Order Priority,Order Date,Order ID,Ship Date,Units Sold,Unit Price,Unit Cost,Total Revenue,Total Cost,Total Profit]
+checks:
+  data:
+    Region: [Asia,Australia and Oceania,Central America and the Caribbean,Europe,Middle East and North Africa,North America,Sub-Saharan Africa]
+    Sales Channel: [Online,Offline]
+    Order Priority: [H,M,L,C]
+  date_field: [Order Date,Ship Date]
+  float_field: [Unit Price,Unit Cost,Total Revenue,Total Cost,Total Profit]
+  number_field: [Units Sold]
+output:
+  fields: [Region, Sales Channel, Country, Item Type, Order Priority, Order Date, Order ID, Ship Date, Units Sold, Unit Price, Unit Cost, Total Revenue, Total Cost, Total Profit]
+  group_fields: [Region,Sales Channel]
+  leaf_fields:
+    Country: [Country, '']
+    Item Type: [ItemType, '']
+    Order Priority: [OrderPriority, '']
+    Order Date: [OrderDate, '']
+    Order ID: [OrderId, '']
+    Ship Date: [ShipDate, '']
+    Units Sold: [UnitsSold, sum]
+    Unit Price: [UnitPrice, sum]
+    Unit Cost: [UnitCost, sum]
+    Total Revenue: [TotalRevenue, sum]
+    Total Cost: [TotalCost, sum]
+    Total Profit: [TotalProfit, sum]
+  field_expansion:
+    Order Priority:
+      H: High
+      M: Medium
+      L: Low
+      C: Critical
+  db:
+    host: localhost
+    port: 27017
+    name: sales
+    collection: sales_summary
+'''
+TRANSFORM_CONFIG_OUTPUT_FIELDS_NOT_SPECIFIED = '''
+source:
+  file: input/sales-records.csv
+  fields: [Region,Country,Item Type,Sales Channel,Order Priority,Order Date,Order ID,Ship Date,Units Sold,Unit Price,Unit Cost,Total Revenue,Total Cost,Total Profit]
+checks:
+  data:
+    Region: [Asia,Australia and Oceania,Central America and the Caribbean,Europe,Middle East and North Africa,North America,Sub-Saharan Africa]
+    Sales Channel: [Online,Offline]
+    Order Priority: [H,M,L,C]
+  date_field: [Order Date,Ship Date]
+  float_field: [Unit Price,Unit Cost,Total Revenue,Total Cost,Total Profit]
+  number_field: [Units Sold]
+output:
+  file: output/sales-transformed.json
+  group_fields: [Region,Sales Channel]
+  leaf_fields:
+    Country: [Country, '']
+    Item Type: [ItemType, '']
+    Order Priority: [OrderPriority, '']
+    Order Date: [OrderDate, '']
+    Order ID: [OrderId, '']
+    Ship Date: [ShipDate, '']
+    Units Sold: [UnitsSold, sum]
+    Unit Price: [UnitPrice, sum]
+    Unit Cost: [UnitCost, sum]
+    Total Revenue: [TotalRevenue, sum]
+    Total Cost: [TotalCost, sum]
+    Total Profit: [TotalProfit, sum]
+  field_expansion:
+    Order Priority:
+      H: High
+      M: Medium
+      L: Low
+      C: Critical
+  db:
+    host: localhost
+    port: 27017
+    name: sales
+    collection: sales_summary
+'''
+TRANSFORM_CONFIG_SOME_CHECK_NOT_SPECIFIED = '''
+source:
+  file: input/sales-records.csv
+  fields: [Region,Country,Item Type,Sales Channel,Order Priority,Order Date,Order ID,Ship Date,Units Sold,Unit Price,Unit Cost,Total Revenue,Total Cost,Total Profit]
+checks:
+  data:
+    Region: [Asia,Australia and Oceania,Central America and the Caribbean,Europe,Middle East and North Africa,North America,Sub-Saharan Africa]
+    Sales Channel: [Online,Offline]
+    Order Priority: [H,M,L,C]
+  float_field: [Unit Price,Unit Cost,Total Revenue,Total Cost,Total Profit]
+  number_field: [Units Sold]
+output:
+  file: output/sales-transformed.json
+  fields: [Region, Sales Channel, Country, Item Type, Order Priority, Order Date, Order ID, Ship Date, Units Sold, Unit Price, Unit Cost, Total Revenue, Total Cost, Total Profit]
+  group_fields: [Region,Sales Channel]
+  leaf_fields:
+    Country: [Country, '']
+    Item Type: [ItemType, '']
+    Order Priority: [OrderPriority, '']
+    Order Date: [OrderDate, '']
+    Order ID: [OrderId, '']
+    Ship Date: [ShipDate, '']
+    Units Sold: [UnitsSold, sum]
+    Unit Price: [UnitPrice, sum]
+    Unit Cost: [UnitCost, sum]
+    Total Revenue: [TotalRevenue, sum]
+    Total Cost: [TotalCost, sum]
+    Total Profit: [TotalProfit, sum]
+  field_expansion:
+    Order Priority:
+      H: High
+      M: Medium
+      L: Low
+      C: Critical
+  db:
+    host: localhost
+    port: 27017
+    name: sales
+    collection: sales_summary
+'''
+TRANSFORM_CONFIG_DB_NOT_SPECIFIED = '''
+source:
+  file: input/sales-records.csv
+  fields: [Region,Country,Item Type,Sales Channel,Order Priority,Order Date,Order ID,Ship Date,Units Sold,Unit Price,Unit Cost,Total Revenue,Total Cost,Total Profit]
+checks:
+  data:
+    Region: [Asia,Australia and Oceania,Central America and the Caribbean,Europe,Middle East and North Africa,North America,Sub-Saharan Africa]
+    Sales Channel: [Online,Offline]
+    Order Priority: [H,M,L,C]
+  date_field: [Order Date,Ship Date]
+  float_field: [Unit Price,Unit Cost,Total Revenue,Total Cost,Total Profit]
+  number_field: [Units Sold]
+output:
+  file: output/sales-transformed.json
+  fields: [Region, Sales Channel, Country, Item Type, Order Priority, Order Date, Order ID, Ship Date, Units Sold, Unit Price, Unit Cost, Total Revenue, Total Cost, Total Profit]
+  group_fields: [Region,Sales Channel]
+  leaf_fields:
+    Country: [Country, '']
+    Item Type: [ItemType, '']
+    Order Priority: [OrderPriority, '']
+    Order Date: [OrderDate, '']
+    Order ID: [OrderId, '']
+    Ship Date: [ShipDate, '']
+    Units Sold: [UnitsSold, sum]
+    Unit Price: [UnitPrice, sum]
+    Unit Cost: [UnitCost, sum]
+    Total Revenue: [TotalRevenue, sum]
+    Total Cost: [TotalCost, sum]
+    Total Profit: [TotalProfit, sum]
+  field_expansion:
+    Order Priority:
+      H: High
+      M: Medium
+      L: Low
+      C: Critical
 '''
 SOURCE_DATA_VALID = '''Region,Country,Item Type,Sales Channel,Order Priority,Order Date,Order ID,Ship Date,Units Sold,Unit Price,Unit Cost,Total Revenue,Total Cost,Total Profit
 Middle East and North Africa,Libya,Cosmetics,Offline,M,10/18/2014,686800706,10/31/2014,8446,437.2,263.33,3692591.2,2224085.18,1468506.02
+Middle East and North Africa,Morocco,Baby Food,Offline,C,10/31/2016,246222341,12/9/2016,1517,255.28,159.42,387259.76,241840.14,145419.62
 North America,Canada,Vegetables,Online,M,11/7/2011,185941302,12/8/2011,3018,154.06,90.93,464953.08,274426.74,190526.34
 Middle East and North Africa,Morocco,Baby Food,Offline,C,10/31/2016,246222341,12/9/2016,1517,255.28,159.42,387259.76,241840.14,145419.62'''
+
+EXPECTED_OUTPUT = {
+  'Middle East and North Africa': {
+    'Offline':[
+      {'Country': 'Libya', 'ItemType': 'Cosmetics', 'OrderPriority': 'Medium', 'OrderDate': '10/18/2014', 'OrderId': '686800706', 'ShipDate': '10/31/2014', 'UnitsSold': 8446, 'UnitPrice': 437.2, 'UnitCost': 263.33, 'TotalRevenue': 3692591.2, 'TotalCost': 2224085.18, 'TotalProfit': 1468506.02},
+      {'Country': 'Morocco', 'ItemType': 'Baby Food', 'OrderPriority': 'Critical', 'OrderDate': '10/31/2016', 'OrderId': '246222341', 'ShipDate': '12/9/2016', 'UnitsSold': 3034, 'UnitPrice': 510.56, 'UnitCost': 318.84, 'TotalRevenue': 387259.76, 'TotalCost': 483680.28, 'TotalProfit': 290839.24}
+      ]
+  },
+  'North America': {
+    'Online':[
+      {'Country': 'Canada', 'ItemType': 'Vegetables', 'OrderPriority': 'Medium', 'OrderDate': '11/7/2011', 'OrderId': '185941302', 'ShipDate': '12/8/2011', 'UnitsSold': 3018, 'UnitPrice': 154.06, 'UnitCost': 90.93, 'TotalRevenue': 464953.08, 'TotalCost': 274426.74, 'TotalProfit': 190526.34}
+      ]
+  }
+}
 
 EXTRACTED_SOURCE_DATA_VALID = \
 {
@@ -187,81 +426,116 @@ Middle East and North Africa,Libya,Cosmetics,Offline,M,10/18/2014,686800706,10/3
 North America,Canada,Vegetables,Online,M,11/7/2011,185941302,12/8/2011,3018.0,154.06,90.93,464953.08,274426.74,190526.34
 Middle East and North Africa,Libya,Baby Food,Offline,C,10/31/2016,246222341,12/9/2016,1517,255.28,159.42,387259.76,241840.14,145419.62'''
 
-@mock.patch('builtins.open', new_callable=mock_open, create=True, read_data=TRANSFORM_CONFIG_VALID_DATA)
+@mock.patch('builtins.open', new_callable=mock_open, create=True, read_data=TRANSFORM_CONFIG_VALID)
 def setup_valid_pipeline(mock_open):
-    p = pipeline.Pipeline(TRANSFORM_NAME, SOURCE_FILENAME)
+    p = pipeline.Pipeline(TRANSFORM_NAME)
     p.get_config()
-    p.get_preprocess_tasks(p.config)
+    p.configure_preprocess_checks()
     return p
 
 def test_pipeline_initialisation():
-    p = pipeline.Pipeline(TRANSFORM_NAME, SOURCE_FILENAME)
-    assert len(p.__dict__.keys()) == 7
+    p = pipeline.Pipeline(TRANSFORM_NAME)
+    assert len(p.__dict__.keys()) == 9
     assert p.transform_name == TRANSFORM_NAME
-    assert p.transform_config_file == "transforms\\" + TRANSFORM_NAME + ".yaml"
-    assert p.source_filename == SOURCE_FILENAME
-    assert p.source_file_format == "csv"
+    assert p.transform_config_file == 'transforms\\' + TRANSFORM_NAME + '.yaml'
     assert p.config == {}
-    assert p.preprocess_tasks == []
+    assert p.source_file == ''
+    assert p.source_file_format == 'csv'
     assert p.source_fields == []
+    assert p.output_file == ''
+    assert p.output_fields == []
+    assert p.preprocess_checks == []
+
+@mock.patch('builtins.open', new_callable=mock_open, create=True, read_data=TRANSFORM_CONFIG_SOURCE_FILENAME_NOT_SPECIFIED)
+def test_pipeline_setup_with_no_source_filename_in_config(mock_open):
+    p = pipeline.Pipeline(TRANSFORM_NAME)
+    with pytest.raises(SystemExit):
+        p.get_config()
 
 @mock.patch('builtins.open', new_callable=mock_open, create=True, read_data=TRANSFORM_CONFIG_SOURCE_FIELDS_NOT_SPECIFIED)
 def test_pipeline_setup_with_no_source_fields_in_config(mock_open):
-    p = pipeline.Pipeline(TRANSFORM_NAME, SOURCE_FILENAME)
+    p = pipeline.Pipeline(TRANSFORM_NAME)
     with pytest.raises(SystemExit):
         p.get_config()
+
+@mock.patch('builtins.open', new_callable=mock_open, create=True, read_data=TRANSFORM_CONFIG_OUTPUT_FILENAME_NOT_SPECIFIED)
+def test_pipeline_setup_with_no_output_filename_in_config(mock_open):
+    p = pipeline.Pipeline(TRANSFORM_NAME)
+    with pytest.raises(SystemExit):
+        p.get_config()
+
+@mock.patch('builtins.open', new_callable=mock_open, create=True, read_data=TRANSFORM_CONFIG_OUTPUT_FIELDS_NOT_SPECIFIED)
+def test_pipeline_setup_with_no_output_fields_in_config(mock_open):
+    p = pipeline.Pipeline(TRANSFORM_NAME)
+    with pytest.raises(SystemExit):
+        p.get_config()
+
+@mock.patch('builtins.open', new_callable=mock_open, create=True, read_data=TRANSFORM_CONFIG_SOME_CHECK_NOT_SPECIFIED)
+def test_pipeline_setup_with_some_check_not_in_config(mock_open):
+    all_preprocess_checks = [
+    'data_completeness',
+    'data',
+    'date_field',
+    'float_field',
+    'number_field'
+    ]
+    p = pipeline.Pipeline(TRANSFORM_NAME)
+    p.get_config()
+    p.configure_preprocess_checks()
+    assert len(p.preprocess_checks) == len(all_preprocess_checks) - 1
+
+@mock.patch('builtins.open', new_callable=mock_open, create=True, read_data=TRANSFORM_CONFIG_DB_NOT_SPECIFIED)
+def test_pipeline_setup_db_not_specified(mock_open):
+    p = pipeline.Pipeline(TRANSFORM_NAME)
+    p.get_config()
+    p.configure_preprocess_checks()
+    e = pipeline.Extract(p)
+    t = pipeline.Transform(p,e)
+    with pytest.raises(SystemExit):
+        t.get_db_connection()
 
 def test_get_config_with_invalid_transform_name_passed():
-    p = pipeline.Pipeline(SOME_INVALID_TRANSFORM_NAME, SOURCE_FILENAME)
+    p = pipeline.Pipeline(SOME_INVALID_TRANSFORM_NAME)
     with pytest.raises(SystemExit):
         p.get_config()
 
-def test_get_preprocess_tasks():
-    all_preprocess_tasks = [
-    'data_completeness_check',
-    'data_validations_check',
-    'date_field_check',
-    'float_field_check',
-    'number_field_check'
+@mock.patch('builtins.open', new_callable=mock_open, create=True, read_data=TRANSFORM_CONFIG_VALID)
+def test_configure_preprocess_checks(mock_open):
+    all_preprocess_checks = [
+    'data_completeness',
+    'data',
+    'date_field',
+    'float_field',
+    'number_field'
     ]
-    p = pipeline.Pipeline(TRANSFORM_NAME, SOURCE_FILENAME)
-    p.get_preprocess_tasks(yaml.safe_load(TRANSFORM_CONFIG_VALID))
-    assert p.preprocess_tasks == all_preprocess_tasks
+    p = pipeline.Pipeline(TRANSFORM_NAME)
+    p.get_config()
+    p.configure_preprocess_checks()
+    assert p.preprocess_checks == all_preprocess_checks
 
-def test_get_preprocess_tasks_invalid():
-    all_preprocess_tasks = [
-    'data_completeness_check',
-    'data_validations_check',
-    'float_field_check',
-    'number_field_check'
-    ]
-    p = pipeline.Pipeline(TRANSFORM_NAME, SOURCE_FILENAME)
-    p.get_preprocess_tasks(yaml.safe_load(TRANSFORM_CONFIG_VALID))
-    assert len(all_preprocess_tasks) == len(p.preprocess_tasks) - 1
-    
 @mock.patch('builtins.open', new_callable=mock_open, create=True, read_data=TRANSFORM_CONFIG_VALID)
 def test_get_config_with_valid_transform_passed(mock_open):
     expected_config = yaml.safe_load(TRANSFORM_CONFIG_VALID)
-    p = pipeline.Pipeline(TRANSFORM_NAME, SOURCE_FILENAME)
+    p = pipeline.Pipeline(TRANSFORM_NAME)
     p.get_config()
     assert type(p.config) == dict
     assert p.config == expected_config
 
-@mock.patch('builtins.open', new_callable=mock_open, create=True, read_data=TRANSFORM_CONFIG_VALID_DATA)
+@mock.patch('builtins.open', new_callable=mock_open, create=True, read_data=TRANSFORM_CONFIG_VALID)
 def test_extract_initialisation(mock_open):
-    p = pipeline.Pipeline(TRANSFORM_NAME, SOURCE_FILENAME)
+    p = pipeline.Pipeline(TRANSFORM_NAME)
     p.get_config()
     e = pipeline.Extract(p)
-    assert len(e.__dict__.keys()) == 8
+    assert len(e.__dict__.keys()) == 10
 
-@mock.patch('builtins.open', new_callable=mock_open, create=True, read_data=TRANSFORM_CONFIG_VALID_DATA)
+@mock.patch('builtins.open', new_callable=mock_open, create=True, read_data=TRANSFORM_CONFIG_VALID)
 def test_transform_initialisation(mock_open):
-    p = pipeline.Pipeline(TRANSFORM_NAME, SOURCE_FILENAME)
+    p = pipeline.Pipeline(TRANSFORM_NAME)
     p.get_config()
-    p.get_preprocess_tasks(p.config)
+    p.configure_preprocess_checks()
     e = pipeline.Extract(p)
     t = pipeline.Transform(p,e)
-    assert len(t.__dict__.keys()) == 12
+    assert len(t.__dict__.keys()) == 13
 
 @mock.patch('builtins.open', new_callable=mock_open, create=True, read_data=SOURCE_DATA_VALID)
 def test_run_data_completeness_check_with_valid_data(mock_open):
@@ -270,7 +544,7 @@ def test_run_data_completeness_check_with_valid_data(mock_open):
     e.extract()
     t = pipeline.Transform(p,e)
     t.transform()
-    assert len(t.transformed_data) == 3
+    assert len(t.transformed_data) == 4
     assert len(t.rejected_data) == 0
 
 @mock.patch('builtins.open', new_callable=mock_open, create=True, read_data=SOURCE_DATA_MISSING_FIELD)
@@ -323,7 +597,6 @@ def test_run_data_completeness_check_with_invalid_priority(mock_open):
     assert len(t.transformed_data) == 1
     assert len(t.rejected_data) == 2
 
-
 @mock.patch('builtins.open', new_callable=mock_open, create=True, read_data=SOURCE_DATA_INVALID_ORDER_DATE)
 def test_run_data_completeness_check_with_invalid_order_date(mock_open):
     p = setup_valid_pipeline()
@@ -333,7 +606,6 @@ def test_run_data_completeness_check_with_invalid_order_date(mock_open):
     t.transform()
     assert len(t.transformed_data) == 2
     assert len(t.rejected_data) == 1
-
 
 @mock.patch('builtins.open', new_callable=mock_open, create=True, read_data=SOURCE_DATA_INVALID_SHIP_DATE)
 def test_run_data_completeness_check_with_invalid_ship_date(mock_open):
@@ -357,88 +629,21 @@ def test_run_data_completeness_check_with_invalid_unit_price(mock_open):
 
 @mock.patch('builtins.open', new_callable=mock_open, create=True, read_data=SOURCE_DATA_INVALID_UNITS_SOLD)
 def test_run_data_completeness_check_with_invalid_units_sold(mock_open):
-    p = setup_valid_pipeline()
-    e = pipeline.Extract(p)
-    e.extract()
-    t = pipeline.Transform(p,e)
-    t.transform()
-    assert len(t.transformed_data) == 1
-    assert len(t.rejected_data) == 2
-
-def test_calc_revenue():
-    result = pipeline.calc_revenue(EXTRACTED_SOURCE_DATA_VALID, 'Middle East and North Africa', 'Libya')
-    expected_result = 4079850.96
-    assert result == expected_result
-
-def test_calc_profit():
-    result = pipeline.calc_profit(EXTRACTED_SOURCE_DATA_VALID, 'Middle East and North Africa', 'Libya')
-    expected_result = 1613925.64
-    assert result == expected_result
+  p = setup_valid_pipeline()
+  e = pipeline.Extract(p)
+  e.extract()
+  t = pipeline.Transform(p,e)
+  t.transform()
+  assert len(t.transformed_data) == 1
+  assert len(t.rejected_data) == 2
 
 @mock.patch('builtins.open', new_callable=mock_open, create=True, read_data=SOURCE_DATA_VALID)
-def test_gen_sales_summary(mock_open):
-    p = setup_valid_pipeline()
-    e = pipeline.Extract(p)
-    e.extract()
-    t = pipeline.Transform(p,e)
-    t.transform()
-    result = t.gen_sales_summary()
-
-    assert len(result) == 2
-    assert len(result['Middle East and North Africa']['Offline']) == 2
-    assert len(result['North America']['Online']) == 1
-
-    for i in range(0,len(result['Middle East and North Africa']['Offline'])):
-        assert len((result['Middle East and North Africa']['Offline'][i]).keys()) == 12
-        assert 'Country' in (result['Middle East and North Africa']['Offline'][i]).keys()
-        assert 'ItemType' in (result['Middle East and North Africa']['Offline'][i]).keys()
-        assert 'OrderPriority' in (result['Middle East and North Africa']['Offline'][i]).keys()
-        assert 'OrderDate' in (result['Middle East and North Africa']['Offline'][i]).keys()
-        assert 'OrderId' in (result['Middle East and North Africa']['Offline'][i]).keys()
-        assert 'ShipDate' in (result['Middle East and North Africa']['Offline'][i]).keys()
-        assert 'UnitsSold' in (result['Middle East and North Africa']['Offline'][i]).keys()
-        assert 'UnitPrice' in (result['Middle East and North Africa']['Offline'][i]).keys()
-        assert 'UnitCost' in (result['Middle East and North Africa']['Offline'][i]).keys()
-        assert 'TotalRevenue' in (result['Middle East and North Africa']['Offline'][i]).keys()
-        assert 'TotalCost' in (result['Middle East and North Africa']['Offline'][i]).keys()
-        assert 'TotalProfit' in (result['Middle East and North Africa']['Offline'][i]).keys()
-
-    for i in range(0,len(result['North America']['Online'])):
-        assert len((result['North America']['Online'][i]).keys()) == 12
-        assert 'Country' in (result['North America']['Online'][i]).keys()
-        assert 'ItemType' in (result['North America']['Online'][i]).keys()
-        assert 'OrderPriority' in (result['North America']['Online'][i]).keys()
-        assert 'OrderDate' in (result['North America']['Online'][i]).keys()
-        assert 'OrderId' in (result['North America']['Online'][i]).keys()
-        assert 'ShipDate' in (result['North America']['Online'][i]).keys()
-        assert 'UnitsSold' in (result['North America']['Online'][i]).keys()
-        assert 'UnitPrice' in (result['North America']['Online'][i]).keys()
-        assert 'UnitCost' in (result['North America']['Online'][i]).keys()
-        assert 'TotalRevenue' in (result['North America']['Online'][i]).keys()
-        assert 'TotalCost' in (result['North America']['Online'][i]).keys()
-        assert 'TotalProfit' in (result['North America']['Online'][i]).keys()
-
-@mock.patch('builtins.open', new_callable=mock_open, create=True, read_data=SOURCE_DATA_VALID)
-def test_gen_sales_aggregate(mock_open):
-    p = setup_valid_pipeline()
-    e = pipeline.Extract(p)
-    e.extract()
-    t = pipeline.Transform(p,e)
-    t.transform()
-    result = t.gen_sales_aggregate()
-
-    assert len(result) == 2
-    assert len(result['Middle East and North Africa']) == 2
-    assert len(result['North America']) == 1
-
-    for i in range(0,len(result['Middle East and North Africa'])):
-        assert len((result['Middle East and North Africa'][i]).keys()) == 3
-        assert 'Country' in (result['Middle East and North Africa'][i]).keys()
-        assert 'CountryRevenue' in (result['Middle East and North Africa'][i]).keys()
-        assert 'CountryProfit' in (result['Middle East and North Africa'][i]).keys()
-
-    for i in range(0,len(result['North America'])):
-        assert len((result['North America'][i]).keys()) == 3
-        assert 'Country' in (result['North America'][i]).keys()
-        assert 'CountryRevenue' in (result['North America'][i]).keys()
-        assert 'CountryProfit' in (result['North America'][i]).keys()
+def test_gen_output(mock_open):
+  p = setup_valid_pipeline()
+  e = pipeline.Extract(p)
+  e.extract()
+  t = pipeline.Transform(p,e)
+  t.transform()
+  data = t.gen_output()
+  differences = DeepDiff(data, EXPECTED_OUTPUT)
+  assert differences == {}
